@@ -14,12 +14,13 @@
 - /admin/ 
 - /admin/products/
 - /admin/users/
+- /admin/transactions/
 
 ### Store
 - /store/
 - /store/custom/
-- /store/categories/prebuilt/
-- /store/categories/?cat=[cpu, powersupply, mobo]&order=[price, alfa]&descending=false/
+- /store/prebuilt/
+- /store/products/
 
 ### User pages
 - /me/
@@ -30,13 +31,12 @@
 ## Endpoints
 - /login/
 - /register/
-
 - /users/
 - /users/me/
-- /users/me/cart/
-- /users/me/cart/checkout
-
-- /products/
+- /transactions/
+- /cart/
+- /cart/checkout/
+- /products/?type=[cpu, powersupply, mobo, ...]&order=[price, name]&descending=false
 
 # Models
 ```
@@ -45,6 +45,7 @@ user = {
     name
     phone
     email
+    hashed_password
     role
 }
 
@@ -56,6 +57,8 @@ product = {
     price
     stock_amount
     sold_amount
+    product_type
+    product_compatibility
 }
 ```
 
@@ -92,8 +95,6 @@ product = {
 - PSU <-> Case (Size)
 - PSU <-> Mobo (Pins)
 - PSU <-> GPU (Connectors)
-
-P
 
 
 
