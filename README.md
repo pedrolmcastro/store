@@ -12,7 +12,6 @@
 - /admin/ 
 - /admin/products/
 - /admin/users/
-- /admin/transactions/
 
 ### Store
 - /store/
