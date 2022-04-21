@@ -1,6 +1,10 @@
-# Gaming Desktop Store
-- Buy computer parts
+# Gaming Gem, A Gaming Desktop Store
+## Name of Students:
+- Lucas Massao Fukusawa Dagnone - 11295810
+-
+- 
 
+# 1. Requirements
 # Frontend
 
 ## Pages
@@ -74,5 +78,5 @@ product = {
 - Coolers
 - RGB
 
-
+# 2. Project Description
 
