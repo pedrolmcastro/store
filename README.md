@@ -1,82 +1,47 @@
-# Gaming Gem, A Gaming Desktop Store
-## Name of Students:
+# Gaming Gem
+
+- Pedro Lucas de Moliner de Castro - 11795784
 - Lucas Massao Fukusawa Dagnone - 11295810
--
-- 
+- João Guilherme Jarochinski Marinho - 10698193
 
-# 1. Requirements
-# Frontend
 
-## Pages
-### Session
-- /login/
-- /register/
+## 1. Requirements
 
-### Admin pages
-- /admin/ 
-- /admin/products/
-- /admin/users/
+The store must have two types of users: **Customers** and **Administrators** with name, id, address, phone and email data. Each product sold needs a name, id, photo, description, price, quantity in stock and quantity sold. Since the products are **Computer Components** and **Peripherals**, the description must contain its category and specifications, for example: a Processor has cores, threads, frequency, supported sockets, cache size, etc. The customer should also be able to **Filter** the product catalogue by hardware specifications. Lastly the store must have a **Shopping Cart** system and support payment with a credit card number.
 
-### Store
-- /store/
-- /store/products/
-- /store/products/:id
 
-### User pages
-- /me/
-- /me/cart/
-- /me/cart/checkout/
+## 2. Project Description
 
-# Backend
-## Endpoints
-- /login/
-- /register/
-- /users/
-- /users/me/
-- /transactions/
-- /cart/
-- /cart/checkout/
-- /products/?type=[cpu, powersupply, mobo, ...]&order=[price, name]&descending=false
+**Gaming Gem** is an online computer components and peripherals store focused on hardware for gaming. The website will be presented as a Single Page Application having the following sections: Login/Register, Home, Products Catalogue, Product Description, Cart, Payment, Profile and Manage Products/Customers. The full mockup can be seen in [Figma](https://www.figma.com/file/ozZUSnOeuyotmszMJvDc2P/Vuetify-Components-(Community)?node-id=13144%3A605) in the "Store" page and a partial one made with HTML5 and CSS3 can be found in \_. The navigation diagram for the project can be seen bellow:
 
-# Models
-```
-user = {
-    id
-    name
-    phone
-    email
-    hashed_password
-    role
-}
+<img src="https://github.com/pedrolmcastro/store/blob/main/mockup/Navigation%20Diagram.drawio.png" width="100%">
 
-product = {
-    id
-    name
-    description
-    photo
-    price
-    stock_amount
-    sold_amount
-    product_type
-    product_compatibility
-}
-```
 
-# Components
-## List of components
-### Main
-- Case
-- Power Supply
-- Motherboard
-- RAM
-- CPU
-- Drive
-- GPU
+## 3. Comments About the Code
 
-### Extras
-- Fans
-- Coolers
-- RGB
+The website will be built using Vue and Vuetify for the front-end and Node with Express for the back-end.
 
-# 2. Project Description
 
+## 4. Test Plan
+
+The Jest framework will be used for unit testing in the code base.
+
+
+## 5. Test Results
+
+TODO
+
+
+## 6. Build Procedures
+
+TODO
+
+
+## 7. Problems
+
+For the mockup stage, the group found hard to represent the product description in a generic way, since it is tied to the specifics of the product category. This problem is more evident in the **Add/Edit Product** section where the Administrator should add the hardware specifications, because of that this section is the most likely to change from the mockup to the final product.
+
+
+## 8. Comments
+
+TODO
