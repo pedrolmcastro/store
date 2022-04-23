@@ -1,0 +1,53 @@
+@import url("global.css");
+
+
+/* Buttons */
+
+#buttons {
+    width: 100%;
+    height: 50px;
+    text-align: center;
+}
+
+#buttons button {
+    border: 0;
+    width: 49%;
+    height: 100%;
+    outline: none;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--grey);
+    background: transparent;
+    text-transform: uppercase;
+}
+
+#buttons button:first-of-type { /* First is selected */
+    color: var(--red);
+    border-bottom: 1px solid var(--red);
+}
+
+
+/* Forms */
+
+form {
+    width: 75%;
+    display: none;
+    margin: 110px auto 0;
+}
+
+form input {
+    width: 96%;
+    outline: none;
+    margin: 5px auto;
+    padding: 10px 2%;
+    border: 1px solid var(--grey);
+}
+
+form input::-webkit-input-placeholder {
+    text-transform: uppercase;
+    color: var(--grey);
+}
+
+form:first-of-type { /* First is selected */
+    display: block;
+}
