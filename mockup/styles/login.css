@@ -1,6 +1,14 @@
 @import url("global.css");
 
 
+#forms {
+    width: 650px;
+    height: 730px;
+    margin: 5% auto;
+    background-color: var(--white);
+}
+
+
 /* Buttons */
 
 #buttons {
@@ -50,4 +58,17 @@ form input::-webkit-input-placeholder {
 
 form:first-of-type { /* First is selected */
     display: block;
+}
+
+.submit {
+    border: 0;
+    width: 200px;
+    height: 35px;
+    display: block;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 75px auto 0;
+    color: var(--white);
+    text-transform: uppercase;
+    background-color: var(--red);
 }

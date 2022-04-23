@@ -3,7 +3,7 @@ function style(section, selected) {
     section.form.style.display = selected ? "block" : "none";
 
     section.button.style.color = selected ? "var(--red)" : "var(--grey)";
-    section.button.style.borderBottom = selected ? "1px solid var(--red)" : "0";
+    section.button.style.borderBottom = selected ? "1px solid var(--red)" : "none";
 }
 
 // Select the given section

@@ -5,9 +5,12 @@
     --grey: rgba(0, 0, 0, 0.54);
     --white: rgb(255, 255, 255);
     --black: rgba(0, 0, 0, 0.87);
+    --light-grey: rgb(196, 196, 196);
     --light-black: rgba(0, 0, 0, 0.25);
-    --light-grey: rgb(196, 196, 196, 0.2);
+    --lighter-black: rgba(0, 0, 0, 0.12);
+    --lighter-grey: rgb(196, 196, 196, 0.2);
 }
+
 
 * {
     margin: 0;
@@ -17,7 +20,7 @@
 body {
     font-weight: 400;
     font-family: "Roboto", sans-serif;
-    background-color: var(--light-grey);
+    background-color: var(--lighter-grey);
 }
 
 
@@ -42,12 +45,9 @@ header a {
     border: 0;
     margin: 0 20px;
     font-size: 20px;
+    cursor: pointer;
     color: var(--white);
     background: transparent;
-}
-
-.navigation:hover {
-    cursor: pointer;
 }
 
 #title {
@@ -88,30 +88,4 @@ footer p {
 
 footer strong {
     font-weight: 500;
-}
-
-
-/* Containers */
-
-.container {
-    width: 650px;
-    height: 730px;
-    margin: 5% auto;
-    background-color: var(--white);
-}
-
-
-/* Buttons */
-
-.button {
-    border: 0;
-    width: 200px;
-    height: 35px;
-    display: block;
-    cursor: pointer;
-    border-radius: 4px;
-    margin: 75px auto 0;
-    color: var(--white);
-    text-transform: uppercase;
-    background-color: var(--red);
 }
