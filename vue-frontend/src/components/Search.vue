@@ -1,33 +1,43 @@
 <script setup>
 import { ref } from 'vue';
 
-    let currentSearch = ref("");
+    let query = ref("");
+    
+    function toLink(query) {
+        return `/products/?search=${query}`
+    }
 
 </script>
 
 <template>
-    <form>
-        <input v-model="currentSearch" type="search" placeholder="Search products">
-        <router-link to="/products">
-            <font-awesome-icon icon="magnifying-glass"></font-awesome-icon>
+    <form id="search-container">
+        <router-link id="search-button" :to="toLink(query)">
+            <button>
+                <font-awesome-icon icon="magnifying-glass"></font-awesome-icon>
+            </button>
         </router-link>
-
+        <input v-model="query" type="search" placeholder="Search products">
     </form>
 </template>
 
 
 <style scoped>
 
+#search-container {
+    background-color: white;
+    display: flex;
+}
+
 input:focus {
     outline:none;
 }
 
-input, button {
+input, button  {
     height: 100%;
     background-color: var(--white);
-    padding: 0 5px;
     margin: 0px;
     border: 0px solid transparent;
+    padding: 0 5px;
 }
 
 </style>

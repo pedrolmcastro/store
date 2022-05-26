@@ -1,15 +1,17 @@
 <script setup>
 import Navbar from './components/Navbar.vue'
-import { RouterLink } from 'vue-router';
+import Footer from './components/Footer.vue'
 
 
 </script>
 
 
 <template>
-  <Navbar></Navbar>
-
-  <router-view></router-view>
+  <Navbar />
+  <div id="content">
+    <router-view></router-view>
+  </div>
+  <Footer />
 </template>
 
 
@@ -31,11 +33,18 @@ import { RouterLink } from 'vue-router';
 }
 
 #app {
-  width: 100vw;
-  height: 100vh;
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+#content {
+  flex-grow: 1;
 }
 
 html, body {

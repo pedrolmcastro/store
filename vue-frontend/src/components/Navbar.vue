@@ -4,7 +4,7 @@
 
 <template>
     <nav id="navbar">
-        <div id="nav-left">
+        <div class="nav-side" id="nav-left">
             <button class="nav-button">
                 <font-awesome-icon icon="bars" />
             </button>
@@ -18,7 +18,7 @@
             </router-link>
         </div>
 
-        <div>
+        <div class="nav-side" id="nav-right">
             <router-link class="nav-button" to="/cart">
                 <font-awesome-icon icon="cart-shopping" />
             </router-link>
@@ -30,6 +30,14 @@
 </template>
 
 <style scoped>
+
+.nav-side {
+    width: 33%;
+}
+
+#nav-right {
+    text-align: end;
+}
 
 #navbar {
     width: 100vw;
