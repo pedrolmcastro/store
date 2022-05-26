@@ -1,0 +1,3 @@
+<template>
+  <h1>Login | Register Page</h1>
+</template>
