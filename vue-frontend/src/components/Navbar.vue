@@ -1,5 +1,9 @@
 <script setup>
+    import {ref} from 'vue'
     import Search from './Search.vue';
+    import Store from '../Store.vue';
+
+    let isLoggedIn = ref(false);
 </script>
 
 <template>
@@ -22,7 +26,7 @@
             <router-link class="nav-button" to="/cart">
                 <font-awesome-icon icon="cart-shopping" />
             </router-link>
-            <router-link class="nav-button" to="/profile">
+            <router-link class="nav-button" :to="Store.isLoggedIn ? '/profile' : '/login'">
                 <font-awesome-icon icon="circle-user" />
             </router-link>
         </div>
@@ -40,7 +44,7 @@
 }
 
 #navbar {
-    width: 100vw;
+    width: 100%;
     height: 60px;
     background-color: var(--black);
     display: flex;

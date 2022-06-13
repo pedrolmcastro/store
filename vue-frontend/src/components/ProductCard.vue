@@ -1,3 +1,0 @@
-<template>
-    Product Card
-</template>

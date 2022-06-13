@@ -1,6 +1,7 @@
-{
+export default {
     "products": [
         {
+            "id": "i511400f",
             "name": "Intel I5 11400F",
             "category": "CPU",
             "quantity": 5,
@@ -9,6 +10,7 @@
             "image": "assets_link"
         },
         {
+            "id": "r53600x",
             "name": "Ryzen R5 3600X",
             "category": "CPU",
             "quantity": 3,
@@ -17,6 +19,7 @@
             "image": "assets_link"
         },
         {
+            "id": "r33400",
             "name": "Ryzen R3 3400",
             "category": "CPU",
             "quantity": 5,
@@ -25,6 +28,7 @@
             "image": "assets_link"
         },
         {
+            "id": "gbb450",
             "name": "Gigabyte B450M-DS3H",
             "category": "Motherboard",
             "quantity": 2,
@@ -33,6 +37,7 @@
             "image": "assets_link"
         },
         {
+            "id": "asrh110m",
             "name": "Asrock H110M-HG4",
             "category": "Motherboard",
             "quantity": 5,
@@ -44,6 +49,7 @@
 
     "users": [
         {
+            "id": "pato",
             "name": "Pato",
             "address": "Rua dos Patos, 1 - Pato Branco - RJ",
             "phone": "(16) 99777-1111",
@@ -52,6 +58,7 @@
             "isAdmin": false
         },
         {
+            "id": "calango",
             "name": "Calango Rios",
             "address": "Rua Calango, 1 - Calanguineos - MG",
             "phone": "(36) 99222-1111",
@@ -63,6 +70,7 @@
 
     "cards": [
         {
+            "id": "cpato",
             "user": "pato@mail.com",
             "nameOnCard": "PATO TORRES",
             "number": "1234 1111 2222 3333",
@@ -73,6 +81,7 @@
 
     "previous_purchases": [
         {
+            "id": "compato",
             "user": "pato@mail.com",
             "products": [
                 {
