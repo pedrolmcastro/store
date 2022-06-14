@@ -44,6 +44,7 @@ import Footer from './components/Footer.vue'
 }
 
 #content {
+  display: flex;
   flex-grow: 1;
 }
 
@@ -53,4 +54,19 @@ html, body {
 
   background-color: var(--bg-color);
 }
+
+.action-button {
+  all: unset;
+  background-color: var(--red);
+  color: var(--white);
+
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.window {
+  flex-grow: 1;
+}
+
 </style>

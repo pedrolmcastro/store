@@ -27,7 +27,7 @@ let addToCart = () => {
             <p>{{ props.name }}</p>
             <div class="price-and-cart">
                 <span>{{ '$' + props.value.toFixed(2) }}</span>
-                <button @click="addToCart">ADD TO CART</button>
+                <button class="card-button action-button" @click="addToCart">ADD TO CART</button>
             </div>
         </div>
     </div>
@@ -73,5 +73,8 @@ img {
     width: 100%;
 }
 
+.card-button {
+  padding: 0.1rem 0.5rem;
+}
 
 </style>

@@ -10,7 +10,7 @@ import { ref } from 'vue';
 </script>
 
 <template>
-    <form id="search-container">
+    <form class="search-container">
         <router-link id="search-button" :to="toLink(query)">
             <button>
                 <font-awesome-icon icon="magnifying-glass"></font-awesome-icon>
@@ -23,9 +23,10 @@ import { ref } from 'vue';
 
 <style scoped>
 
-#search-container {
+.search-container {
     background-color: white;
     display: flex;
+    box-shadow: 1px 1px 3px 1px rgba(0,0,0,0.3);
 }
 
 input:focus {

@@ -10,7 +10,7 @@ while (products.length > 4)
 </script>
 
 <template>
-  <div id="window">
+  <div class="window">
     <div id="banner">
       <Search id="banner-search"></Search>
     </div>

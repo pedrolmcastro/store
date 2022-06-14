@@ -13,14 +13,14 @@ let login = () => {
 }
 
 let register = () => {
-  // validate
+  
   login()
 }
 
 </script>
 
 <template>
-  <div id="window">
+  <div class="window" id="login-window">
     <div id="form">
       <div class="options">
         <button :class="{ 'selected': show === 'login' }" @click="show = 'login'">LOG IN</button>
@@ -29,7 +29,7 @@ let register = () => {
       <div class="inputs" v-if="show === 'login'">
         <input type="text" placeholder="EMAIL">
         <input type="password" placeholder="PASSWORD">
-        <button class="action-button" @click="login">LOG IN</button>
+        <button class="action-button login-button" @click="login">LOG IN</button>
       </div>
       <div class="inputs" v-else>
         <input type="text" placeholder="NAME">
@@ -38,7 +38,7 @@ let register = () => {
         <input type="email" placeholder="EMAIL">
         <input type="password" placeholder="PASSWORD">
         <input type="password" placeholder="CONFIRM PASSWORD">
-        <button class="action-button" @click="register">REGISTER</button>
+        <button class="action-button login-button" @click="register">REGISTER</button>
       </div>
     </div>
   </div>
@@ -48,8 +48,7 @@ let register = () => {
 
 <style scoped>
 
-#window {
-  width: 100%;
+#login-window {
   display: flex;
   justify-content: center;
 }
@@ -94,17 +93,11 @@ input {
   border: 1px solid var(--dark-grey)
 }
 
-.action-button {
-  all: unset;
-  background-color: var(--red);
-  color: var(--white);
+.login-button {
   margin: 10%;
   padding: 1em;
   min-width: 30%;
   width: 120px;
-  border-radius: 5px;
-  text-align: center;
-  cursor: pointer;
 }
 
 </style>
