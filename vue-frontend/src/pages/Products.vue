@@ -2,7 +2,7 @@
 import { useRoute } from 'vue-router'
 import Data from '@/assets/datastore'
 import Card from '@/components/Card.vue'
-import { watch, ref, computed } from 'vue';
+import { ref, computed } from 'vue';
 import Search from '@/components/Search.vue';
 
 const route = useRoute()

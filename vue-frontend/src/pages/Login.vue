@@ -13,7 +13,6 @@ let login = () => {
 }
 
 let register = () => {
-  
   login()
 }
 
@@ -47,24 +46,25 @@ let register = () => {
 
 
 <style scoped>
-
-#login-window {
+.window {
   display: flex;
   justify-content: center;
 }
 
-#form {
+#container {
   margin: 5vh;
   width: 30vw;
   min-height: 70vh;
   background-color: var(--white)
 }
+
 .options {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 10%;
 }
+
 .options button {
   background-color: var(--white);
   border: none;
@@ -73,6 +73,7 @@ let register = () => {
   padding: 10px;
   font-size: 1.2rem;
 }
+
 .selected {
   color: var(--red);
   border-bottom: 2px solid var(--red) !important;
