@@ -25,7 +25,7 @@ while (products.length > 4)
 #banner {
   width: 100%;
   height: 40vh;
-  background-color: var(--dark-grey);
+  background: url(../assets/banner.jpg) no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;

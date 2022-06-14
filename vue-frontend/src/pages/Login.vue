@@ -56,7 +56,7 @@ let register = () => {
 
 #form {
   margin: 5vh;
-  width: 50vw;
+  width: 30vw;
   min-height: 70vh;
   background-color: var(--white)
 }
@@ -72,7 +72,7 @@ let register = () => {
   cursor: pointer;
   flex-grow: 1;
   padding: 10px;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 .selected {
   color: var(--red);
@@ -89,7 +89,7 @@ input {
   all: unset;
   width: 70%;
   margin: 10px;
-  font-size: 1.5rem;
+  font-size: 1rem;
   padding: 10px;
   border: 1px solid var(--dark-grey)
 }
@@ -106,4 +106,5 @@ input {
   text-align: center;
   cursor: pointer;
 }
+
 </style>
