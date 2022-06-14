@@ -63,6 +63,15 @@ html, body {
   border-radius: 5px;
   text-align: center;
   cursor: pointer;
+  transition: 0.2s;
+}
+
+.action-button:hover {
+  filter: brightness(110%);
+}
+
+.action-button:active {
+  filter: brightness(90%);
 }
 
 .window {

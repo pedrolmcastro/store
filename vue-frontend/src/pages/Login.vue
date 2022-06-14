@@ -21,7 +21,7 @@ let register = () => {
 
 <template>
   <div class="window" id="login-window">
-    <div id="form">
+    <div id="container">
       <div class="options">
         <button :class="{ 'selected': show === 'login' }" @click="show = 'login'">LOG IN</button>
         <button :class="{ 'selected': show === 'register' }" @click="show = 'register'">REGISTER</button>
@@ -29,7 +29,7 @@ let register = () => {
       <div class="inputs" v-if="show === 'login'">
         <input type="text" placeholder="EMAIL">
         <input type="password" placeholder="PASSWORD">
-        <button class="action-button login-button" @click="login">LOG IN</button>
+        <button class="action-button" @click="login">LOG IN</button>
       </div>
       <div class="inputs" v-else>
         <input type="text" placeholder="NAME">
@@ -38,7 +38,7 @@ let register = () => {
         <input type="email" placeholder="EMAIL">
         <input type="password" placeholder="PASSWORD">
         <input type="password" placeholder="CONFIRM PASSWORD">
-        <button class="action-button login-button" @click="register">REGISTER</button>
+        <button class="action-button" @click="register">REGISTER</button>
       </div>
     </div>
   </div>
@@ -93,7 +93,7 @@ input {
   border: 1px solid var(--dark-grey)
 }
 
-.login-button {
+.action-button {
   margin: 10%;
   padding: 1em;
   min-width: 30%;
