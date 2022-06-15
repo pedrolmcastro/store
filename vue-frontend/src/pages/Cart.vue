@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Store from '../Store.vue';
 import Data from '@/assets/datastore';
@@ -7,13 +7,22 @@ import Data from '@/assets/datastore';
 let step = ref(0)
 const router = useRouter()
 
+const checkout = reactive({
+  address: "",
+  cardName: "",
+  cardNumber: "",
+  cvv: "",
+  expirationDate: "",
+})
+
 const checkLogged = () => {
-  if (!Store.isLoggedIn) {
-    // Popup
-    router.push('/login')
-  } else {
-    step.value = 1
+  if (!Store.userId) {
+    return router.push('/login')
   }
+
+  Data.users.isLoggedIn()
+  step.value = 1
+
 }
 
 const validateData = () => {
@@ -95,23 +104,22 @@ const minus = (item) => {
           <h2 class="red">${{ totalValue }}</h2>
         </div>
 
-        <p v-if="!Store.isLoggedIn">
+        <p v-if="!Store.userId">
           <router-link to="/login">Log in </router-link>to place your order
         </p>
-        <button class="action-button" :class="{ 'disabled-button': !Store.isLoggedIn }" :disabled="!Store.isLoggedIn"
+        <button class="action-button" :class="{ 'disabled-button': !Store.userId }" :disabled="!Store.userId"
           @click="checkLogged">CHECKOUT</button>
       </div>
 
       <div class="list" v-else-if="step === 1">
-        <h2>DELIVERY ADDRESS</h2>
-        <input type="text" placeholder="ZIP CODE">
-        <input type="text" placeholder="ADDRESS">
+        <h3>DELIVERY ADDRESS</h3>
+        <input type="text" placeholder="* ADDRESS">
 
-        <h2>CARD INFORMATION</h2>
-        <input type="email" placeholder="NAME ON CARD">
-        <input type="text" placeholder="CREDIT CARD">
-        <input type="text" placeholder="CVV">
-        <input type="text" placeholder="EXPIRATION DATE">
+        <h3>CARD INFORMATION</h3>
+        <input type="email" placeholder="* NAME ON CARD">
+        <input type="text" placeholder="* CREDIT CARD">
+        <input type="text" placeholder="* CVV">
+        <input type="text" placeholder="* EXPIRATION DATE">
 
         <button class="action-button" @click="validateData">VALIDATE</button>
       </div>
@@ -170,6 +178,10 @@ const minus = (item) => {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.list h3 {
+  margin-right: auto;
 }
 
 input {

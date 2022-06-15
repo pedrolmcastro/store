@@ -2,7 +2,7 @@
 import { reactive } from 'vue'
 
 export default reactive({
-    isLoggedIn: false,
+    userId: undefined,
     cart: []
 })
 

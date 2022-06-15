@@ -26,7 +26,7 @@
             <router-link class="nav-button" to="/cart">
                 <font-awesome-icon icon="cart-shopping" />
             </router-link>
-            <router-link class="nav-button" :to="Store.isLoggedIn ? '/profile' : '/login'">
+            <router-link class="nav-button" :to="Store.userId ? '/profile' : '/login'">
                 <font-awesome-icon icon="circle-user" />
             </router-link>
         </div>
