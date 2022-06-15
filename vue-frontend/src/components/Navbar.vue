@@ -1,89 +1,85 @@
 <script setup>
-    import {ref} from 'vue'
-    import Search from './Search.vue';
-    import Store from '../Store.vue';
-
+    import Store from "@/Store.vue";
+    import Search from "@/components/Search.vue";
 </script>
 
+
 <template>
-    <nav id="navbar">
-        <div class="nav-side" id="nav-left">
-            <button class="nav-button">
-                <font-awesome-icon icon="bars" />
-            </button>
-                <Search id="search-container"></Search>
+    <nav>
+        <div id="left" class="side">
+            <button class="button"> <font-awesome-icon icon="bars" /> </button>
+            <Search id="search"></Search>
         </div>
 
-        <div>
-            <router-link id="title" to="/"> 
-                <img src="../assets/logo.svg">
-                <h1> Gaming Gem </h1>
-            </router-link>
-        </div>
+        <router-link id="title" to="/">
+            <img src="../assets/logo.svg">
+            <h1> Gaming Gem </h1>
+        </router-link>
 
-        <div class="nav-side" id="nav-right">
-            <router-link class="nav-button" to="/cart">
-                <font-awesome-icon icon="cart-shopping" />
-            </router-link>
-            <router-link class="nav-button" :to="Store.userId ? '/profile' : '/login'">
-                <font-awesome-icon icon="circle-user" />
-            </router-link>
+        <div id="right" class="side">
+            <router-link class="button" to="/cart"> <font-awesome-icon icon="cart-shopping" /> </router-link>
+            <router-link class="button" :to="Store.userId ? '/profile' : '/login'"> <font-awesome-icon icon="circle-user" /> </router-link> <!-- TODO: Admin route -->
         </div>
     </nav>
 </template>
 
+
 <style scoped>
+    nav {
+        width: 100%;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: var(--black);
+    }
 
-.nav-side {
-    width: 33%;
-}
+    .button {
+        border: 0;
+        margin: 0 10px;
+        font-size: 25px;
+        color: var(--white);
+        background: transparent;
+    }
 
-#nav-right {
-    text-align: end;
-}
+    .button:hover {
+        cursor: pointer;
+        color: var(--grey);
+    }
 
-#navbar {
-    width: 100%;
-    height: 60px;
-    background-color: var(--black);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
 
-#nav-left {
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    height: 100%;
-}
+    .side {
+        width: 33%;
+    }
 
-#search-container {
-    width: max-content;
-    height: max-content;
-    height: 50%;
-}
+    #left {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+    }
 
-.nav-button {
-    border: 0;
-    margin: 0 20px;
-    font-size: 30px;
-    cursor: pointer;
-    color: var(--white);
-    background: transparent;
-}
+    #right {
+        text-align: end;
+    }
 
-#title {
-    display: flex;
-    font-size: 20px;
-    font-weight: 500;
-    color: var(--red);
-    text-transform: uppercase;
-    text-decoration: none;
-}
 
-#title img {
-    width: 30px;
-    margin: 0 20px;
-}
+    #title {
+        display: flex;
+        font-size: 10px;
+        font-weight: 500;
+        color: var(--red);
+        text-decoration: none;
+        text-transform: uppercase;
+    }
+
+    #title img {
+        width: 25px;
+        margin: 0 10px;
+    }
+
+    #search {
+        height: 50%;
+        width: max-content;
+    }
 </style>

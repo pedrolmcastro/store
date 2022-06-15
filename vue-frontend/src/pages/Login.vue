@@ -32,7 +32,6 @@
 
         Store.userId = user.id;
         router.push('/');
-        return "";
     };
 
 
@@ -56,7 +55,7 @@
         if (this.password !== this.confirm)                                   return this.error = "Sorry, the password informed and its confirmation do not match.";
         if (Data.users.find(user => user.email === this.email) !== undefined) return this.error = "Sorry, the informed email has already been used.";
 
-        Data.users.push({
+        const user = {
             id:       Data.users.length.toString(), // ID sequencial
             name:     this.name,
             address:  this.address,
@@ -64,44 +63,46 @@
             email:    this.email,
             password: this.password,
             isAdmin:  false,
-        });
-
-        Store.userId = Data.users[-1].id;
+        };
+        
+        Store.userId = user.id;
+        Data.users.push(user);
         router.push('/');
-        return "";
     };
 </script>
+
 
 <template>
     <main class="window">
         <section id="container">
             <div class="options">
-                <button :class="{ 'selected': show === 'login' }" @click="show = 'login'"> LOG IN </button>
-                <button :class="{ 'selected': show === 'register' }" @click="show = 'register'"> REGISTER </button>
+                <button :class="{ 'selected': show === 'login' }" @click="show = 'login'"> Log In </button>
+                <button :class="{ 'selected': show === 'register' }" @click="show = 'register'"> Register </button>
             </div>
 
-            <div class="inputs" v-if="show === 'login'">
-                <input type="email" placeholder="EMAIL *" v-model="login.email">
-                <input type="password" placeholder="PASSWORD *" v-model="login.password">
+            <form class="inputs" v-if="show === 'login'">
+                <input type="email" placeholder="Email *" v-model="login.email">
+                <input type="password" placeholder="Password *" v-model="login.password">
 
                 <div class="error"> <small> {{ login.error }} </small> </div>
-                <button class="action-button" @click="login.validate()"> LOG IN </button>
-            </div>
+                <button class="action-button" @click.stop.prevent="login.validate()"> Log In </button>
+            </form>
 
-            <div class="inputs" v-else>
-                <input type="text" placeholder="NAME *" v-model="register.name">
-                <input type="text" placeholder="ADDRESS" v-model="register.address">
-                <input type="tel" placeholder="PHONE" v-model="register.phone" v-maska="'(##) #####-####'">
-                <input type="email" placeholder="EMAIL *" v-model="register.email">
-                <input type="password" placeholder="PASSWORD *" v-model="register.password">
-                <input type="password" placeholder="CONFIRM PASSWORD *" v-model="register.confirm">
+            <form class="inputs" v-else>
+                <input type="text" placeholder="Name *" v-model="register.name">
+                <input type="text" placeholder="Address" v-model="register.address">
+                <input type="tel" placeholder="Phone" v-model="register.phone" v-maska="'(##) #####-####'">
+                <input type="email" placeholder="Email *" v-model="register.email">
+                <input type="password" placeholder="Password *" v-model="register.password">
+                <input type="password" placeholder="Confirm Password *" v-model="register.confirm">
 
                 <div class="error"> <small> {{ register.error }} </small> </div>
-                <button class="action-button" @click="register.validate()"> REGISTER </button>
-            </div>
+                <button class="action-button" @click.stop.prevent="register.validate()"> Register </button>
+            </form>
         </section>
     </main>
 </template>
+
 
 <style scoped>
     .window {
@@ -134,6 +135,7 @@
         padding: 10px;
         font-size: 1rem;
         cursor: pointer;
+        text-transform: uppercase;
         background-color: var(--white);
     }
 
@@ -145,31 +147,36 @@
 
     .inputs {
         display: flex;
-        flex-direction: column;
         align-items: center;
+        flex-direction: column;
     }
 
     .inputs input {
         all: unset;
         width: 70%;
-        margin: 10px;
+        margin: 5px;
         padding: 10px;
         font-size: 1rem;
         border: 1px solid var(--dark-grey);
     }
+
+    .inputs input::placeholder {
+        text-transform: uppercase;
+    }
+
 
     .action-button {
         margin: 10%;
         padding: 1em;
         width: 120px;
         min-width: 30%;
+        text-transform: uppercase;
     }
 
 
     .error {
         width: 100%;
-        padding: 10px;
-        color: var(--red);
+        padding: 20px;
         text-align: center;
     }
 </style>

@@ -22,8 +22,8 @@ import Footer from './components/Footer.vue'
     --red: #FC3952;
     --white: #FFFFFF;
     --bg-color: #F3F3F3;
-    --grey: #E0E0E0;
-    --dark-grey: #2D2D2D;
+    --grey: #c4c4c4;
+    --dark-grey: #505050;
     --black: #1F1F1F;
     --shadow: #00000033;
 }
@@ -82,6 +82,7 @@ html, body {
 }
 
 .window {
+  min-height: 95vh;
   flex-grow: 1;
 }
 
