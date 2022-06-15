@@ -1,82 +1,94 @@
 <script setup>
+    import { defineProps } from "vue";
+    import Store from "@/Store.vue";
 
-import { defineProps } from 'vue'
-import Store from '@/Store.vue'
 
-const props = defineProps({
-    id: String,
-    name: String,
-    value: Number,
-})
+    const props = defineProps({
+        id: String,
+        name: String,
+        price: Number,
+    });
 
-let addToCart = () => {
-    if (!Store.cart.find(item => item.id === props.id)) {
-        Store.cart.push({ id: props.id, quantity: 1 })
+
+    function add() {
+        if (Store.cart.find(item => item.id === props.id) === undefined) Store.cart.push({ id: props.id, quantity: 1 });
+        // TODO: Pop Up Confirmation
     }
-}
-
 </script>
 
+
 <template>
-    <div class="card">
-        <router-link id="title" :to="'/products/' + props.id">
-            <div class="card-image">
-                <img :src="require(`../assets/products/${props.id}.jpg`)">
-            </div>
+    <div id="card" class="shadow">
+        <router-link :to="`/products/${props.id}`">
+            <div id="image"> <img :src="require(`@/assets/products/${props.id}.jpg`)"> </div>
         </router-link>
 
-        <div class="card-info">
-            <p>{{ props.name }}</p>
-            <div class="price-and-cart">
-                <span>{{ '$' + props.value.toFixed(2) }}</span>
-                <button class="card-button action-button" @click="addToCart">ADD TO CART</button>
+        <div id="info">
+            <h1> {{ props.name }} </h1>
+
+            <div id="bottom">
+                <strong> {{ '$' + props.price.toFixed(2) }} </strong>
+                <button class="action-button" @click="add()"> Add To Cart </button>
             </div>
         </div>
     </div>
 </template>
 
+
 <style scoped>
+    #card {
+        bottom: 0;
+        width: 300px;
+        margin: 1rem;
+        height: 300px;
+        position: relative;
+        transition: bottom .3s ease;
+        background-color: var(--white);
+    }
 
-p {
-    font-weight: bold;
-}
-.card {
-    padding: 1rem;
-    margin: 2rem;
-    width: 300px;
-    height: 300px;
-    background-color: var(--white);
-}
+    #card:hover {
+        bottom: 5px;
+    }
 
-.card-image {
-    height: 67%;
-    width: 100%;
-}
 
-.card-info {
-    height: 33%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-.price-and-cart {
-    display: flex;
-    justify-content: space-between;
-}
-.price-and-cart span {
-    color: var(--red);
-    font-weight: bolder;
-    font-size: 1.4rem;
-}
+    #image {
+        width: 100%;
+        height: 67%;
+    }
 
-img {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-}
+    #image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
 
-.card-button {
-  padding: 0.1rem 0.5rem;
-}
 
+    #info {
+        height: 33%;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    #info h1 {
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+
+
+    #bottom {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #bottom strong {
+        font-weight: 800;
+        color: var(--red);
+        font-size: 1.3rem;
+    }
+
+    .action-button {
+        padding: 0.2rem 0.5rem;
+    }
 </style>

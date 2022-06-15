@@ -12,7 +12,7 @@
         </div>
 
         <router-link id="title" to="/">
-            <img src="../assets/logo.svg">
+            <img :src="require('@/assets/logo.svg')">
             <h1> Gaming Gem </h1>
         </router-link>
 

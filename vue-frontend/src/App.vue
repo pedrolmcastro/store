@@ -65,6 +65,7 @@ html, body {
   text-align: center;
   cursor: pointer;
   transition: 0.2s;
+  text-transform: uppercase;
 }
 
 .action-button:hover {
@@ -84,6 +85,12 @@ html, body {
 .window {
   min-height: 95vh;
   flex-grow: 1;
+}
+
+.shadow {
+  overflow: hidden;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px var(--shadow);
 }
 
 

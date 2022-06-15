@@ -14,7 +14,7 @@ const products = computed(() => Data.products.filter(item => item.quantity > 0).
       <Search id="banner-search"></Search>
     </div>
     <div id="featured-products">
-      <Card  v-for="product in products" :key="product.id" :id="product.id" :name="product.name" :value="product.price_cents / 100" />
+      <Card  v-for="product in products" :key="product.id" :id="product.id" :name="product.name" :price="product.price_cents / 100" />
     </div>
   </div>
 </template>

@@ -74,8 +74,8 @@
 
 <template>
     <main class="window">
-        <section id="container">
-            <div class="options">
+        <section class="shadow">
+            <div id="options">
                 <button :class="{ 'selected': show === 'login' }" @click="show = 'login'"> Log In </button>
                 <button :class="{ 'selected': show === 'register' }" @click="show = 'register'"> Register </button>
             </div>
@@ -110,26 +110,23 @@
         justify-content: center;
     }
 
-    #container {
+    section {
         margin: 5vh;
         width: 30vw;
         min-height: 70vh;
-        overflow: hidden;
-        border-radius: 5px;
         box-sizing: border-box;
         background-color: var(--white);
-        box-shadow: 2px 2px 2px var(--shadow);
     }
 
 
-    .options {
+    #options {
         display: flex;
         margin-bottom: 10%;
         align-items: center;
         justify-content: center;
     }
 
-    .options button {
+    #options button {
         flex-grow: 1;
         border: none;
         padding: 10px;

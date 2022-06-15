@@ -10,7 +10,7 @@
 
 
 <template>
-    <form>
+    <form class="shadow">
         <router-link :to="search(query)">
             <button> <font-awesome-icon icon="magnifying-glass" /> </button>
         </router-link>
@@ -22,10 +22,8 @@
 <style scoped>
     form {
         display: flex;
-        overflow: hidden;
         border-radius: 3px;
         background-color: white;
-        box-shadow: 2px 2px 2px var(--shadow);
     }
 
 
