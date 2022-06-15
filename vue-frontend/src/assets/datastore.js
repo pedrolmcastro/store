@@ -86,16 +86,16 @@ export default {
 
     "previous_purchases": [
         {
-            "id": "compato",
-            "user": "pato@mail.com",
+            "id": 0,
+            "user": "pato",
             "products": [
                 {
-                    "product": "Asrock H110M-HG4",
+                    "id": "asrh110m",
                     "quantity": 1,
                     "paidPrice": 10000
                 },
                 {
-                    "product": "Intel I5 11400F",
+                    "id": "i511400f",
                     "quantity": 1,
                     "paidPrice": 12500
                 }

@@ -3,7 +3,6 @@
     import Search from './Search.vue';
     import Store from '../Store.vue';
 
-    let isLoggedIn = ref(false);
 </script>
 
 <template>

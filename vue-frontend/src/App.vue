@@ -68,7 +68,7 @@ html, body {
 }
 
 .action-button:hover {
-  filter: brightness(110%);
+  filter: brightness(120%);
 }
 
 .action-button:active {
