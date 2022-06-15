@@ -16,7 +16,7 @@ const cartItems = computed(() => {
   })
 })
 
-const checkoutDisabled = computed(() => !Store.userId || cartItems.value.length === 0)
+const checkoutDisabled = computed(() => !Store.logged() || cartItems.value.length === 0)
 
 const totalValue = computed((() =>
   (cartItems.value.reduce((acc, item) => acc + item.quantity * item.product.price_cents, 0) / 100).toFixed(2)
@@ -42,11 +42,11 @@ let step = ref(0)
 const router = useRouter()
 
 const checkLogged = () => {
-  if (!Store.userId) {
+  if (!Store.logged()) {
     return router.push('/login')
   }
 
-  checkout.address = Data.users.find(user => user.id === Store.userId).address
+  checkout.address = Data.users.find(user => user.id === Store.user).address
   step.value = 1
 }
 
@@ -82,7 +82,7 @@ const validateData = () => {
 const confirmPurchase = () => {
   Data.previous_purchases.push({
     id: Data.previous_purchases.length.toString(),
-    user: Store.userId,
+    user: Store.user,
     products: cartItems.value.map(item => ({
       id: item.product.id,
       quantity: item.quantity,
@@ -141,7 +141,7 @@ const confirmPurchase = () => {
           <h2 class="red">${{ totalValue }}</h2>
         </div>
 
-        <p v-if="!Store.userId">
+        <p v-if="!Store.logged()">
           <router-link to="/login">Log in </router-link>to place your order
         </p>
         <button class="action-button" :class="{ 'disabled-button': checkoutDisabled }" :disabled="checkoutDisabled"

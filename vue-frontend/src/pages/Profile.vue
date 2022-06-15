@@ -4,11 +4,11 @@ import Store from '@/Store.vue'
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 
-const purchases = computed(() => Data.previous_purchases.filter(purchase => Store.userId === purchase.user))
+const purchases = computed(() => Data.previous_purchases.filter(purchase => Store.user === purchase.user))
 
 const router = useRouter()
 const logout = () => {
-  Store.userId = undefined
+  Store.user = undefined
   router.push('/')
 }
 </script>

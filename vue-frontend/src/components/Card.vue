@@ -8,12 +8,6 @@
         name: String,
         price: Number,
     });
-
-
-    function add() {
-        if (Store.cart.find(item => item.id === props.id) === undefined) Store.cart.push({ id: props.id, quantity: 1 });
-        // TODO: Pop Up Confirmation
-    }
 </script>
 
 
@@ -27,8 +21,8 @@
             <h1> {{ props.name }} </h1>
 
             <div id="bottom">
-                <strong> {{ '$' + props.price.toFixed(2) }} </strong>
-                <button class="action-button" @click="add()"> Add To Cart </button>
+                <strong> {{ Store.price(props.price) }} </strong>
+                <button class="action-button" @click="Store.add(props.id)"> Add To Cart </button>
             </div>
         </div>
     </div>

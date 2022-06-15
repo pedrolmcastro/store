@@ -30,7 +30,7 @@
         if (user === undefined)              return this.error = "Sorry, the user informed was not found.";
         if (user.password !== this.password) return this.error = "Sorry, the password informed is incorrect.";
 
-        Store.userId = user.id;
+        Store.user = user.id;
         router.push('/');
     };
 
@@ -56,7 +56,7 @@
         if (Data.users.find(user => user.email === this.email) !== undefined) return this.error = "Sorry, the informed email has already been used.";
 
         const user = {
-            id:       Data.users.length.toString(), // ID sequencial
+            id:       Data.users.length.toString(), // Sequential ID
             name:     this.name,
             address:  this.address,
             phone:    this.phone,
@@ -65,7 +65,7 @@
             isAdmin:  false,
         };
         
-        Store.userId = user.id;
+        Store.user = user.id;
         Data.users.push(user);
         router.push('/');
     };

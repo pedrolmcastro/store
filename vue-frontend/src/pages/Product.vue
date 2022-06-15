@@ -1,108 +1,112 @@
 <script setup>
-import { useRoute } from 'vue-router';
-import Data from '@/assets/datastore'
+    import { useRoute } from "vue-router";
 
-const pid = useRoute().params.id
+    import Data from "@/assets/datastore";
+    import Store from "@/Store.vue";
 
-const product = Data.products.find(product => product.id === pid)
-const view_price = (product.price_cents / 100).toFixed(2)
 
+    const id = useRoute().params.id;
+    const product = Data.products.find(product => product.id === id);
 </script>
 
+
 <template>
-    <div class="window">
-        <div class="section" id="product">
+    <main class="window">
+        <section id="product" class="shadow">
             <div id="image">
-                <img :src="require(`../assets/products/${product.id}.jpg`)">
-                <!-- TODO Decidir se coloca multiplas imagens ou náo -->
+                <img :src="require(`@/assets/products/${product.id}.jpg`)">
+                <!-- TODO: Multiple Images -->
             </div>
-            <div id="main">
+
+            <div id="text">
                 <div>
                     <h1> {{ product.name }} </h1>
                     <p> {{ product.summary }} </p>
                 </div>
-                <div id="buy-options">
-                    <div id="price-quantity">
-                       <h1 id="price">${{view_price}}</h1>
-                       <p id="quantity">{{ product.quantity > 0 ? `In Stock: ${product.quantity} units` : 'Out of Stock'}}</p>
+
+                <div id="buy">
+                    <div>
+                       <h1> {{ Store.price(product.price_cents) }} </h1>
+                       <p> {{ product.quantity > 0 ? `In Stock: ${product.quantity} Units` : "Out of Stock" }} </p>
                     </div>
-                    <button class="action-button">
-                        BUY
-                    </button>
+                    <button class="action-button" @click="Store.add(product.id)"> Buy </button>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="section" id="description">
-            <h1>Description</h1>
-            <p> {{product.description}} </p>
-        </div>
-    </div>
+        <section id="description" class="shadow">
+            <h1> Description </h1>
+            <p> {{ product.description }} </p>
+        </section>
+    </main>
 </template>
 
+
 <style scoped>
+    .window {
+        display: flex;
+        line-height: 1.8rem;
+        align-items: center;
+        text-align: justify;
+        white-space: pre-line;
+        flex-direction: column;
+    }
 
-p {
-    white-space: pre-line;
-    line-height: 2rem;
-}
-.window {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
-.section {
-    width: 65%;
-    background-color: var(--white);
-    padding: 2rem 3rem;
-    box-shadow: 1px 1px 3px 1px rgba(0,0,0,0.1);
-}
+    section {
+        width: 65%;
+        padding: 2rem 3rem;
+        background-color: var(--white);
+    }
 
-#product {
-    display: flex;
-    margin: 5rem 0 1rem 0;
-}
+    #product {
+        display: flex;
+        margin: 5rem 0 1rem 0;
+    }
 
-#description {
-    margin: 1rem 0 5rem 0;
-}
 
-#image {
-    width: 30%;
-    margin-right: 3rem;
-}
+    #image {
+        width: 30%;
+        margin-right: 3rem;
+    }
 
-img {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-}
+    #image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
 
-#main {
-    width: 70%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    flex-grow: 1;
-}
 
-#buy-options {
-    display: flex;
-    justify-content: space-between;
-}
-#price {
-    color: var(--red);
-    margin: 0;
-}
+    #text {
+        width: 70%;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
 
-#quantity {
-    margin: 0;
-}
 
-.action-button {
-    padding: 0rem 3rem;
-    font-size: 2rem;
-}
+    #buy {
+        display: flex;
+        justify-content: space-between;
+    }
 
+    #buy h1 {
+        margin: 0;
+        color: var(--red);
+    }
+
+    #buy p {
+        margin: 0;
+    }
+
+    .action-button {
+        font-size: 2rem;
+        padding: 0rem 3rem;
+    }
+
+
+    #description {
+        margin: 1rem 0 5rem 0;
+    }
 </style>
