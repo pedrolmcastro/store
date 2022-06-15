@@ -30,7 +30,7 @@
         if (user === undefined)              return this.error = "Sorry, the user informed was not found.";
         if (user.password !== this.password) return this.error = "Sorry, the password informed is incorrect.";
 
-        Store.isLoggedIn = true;
+        Store.userId = user.id;
         router.push('/');
         return "";
     };
@@ -66,7 +66,7 @@
             isAdmin:  false,
         });
 
-        Store.isLoggedIn = true;
+        Store.userId = Data.users[-1].id;
         router.push('/');
         return "";
     };

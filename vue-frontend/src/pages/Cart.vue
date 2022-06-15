@@ -20,9 +20,8 @@ const checkLogged = () => {
     return router.push('/login')
   }
 
-  Data.users.isLoggedIn()
+  checkout.address = Data.users.find(user => user.id === Store.userId).address
   step.value = 1
-
 }
 
 const validateData = () => {
@@ -113,7 +112,7 @@ const minus = (item) => {
 
       <div class="list" v-else-if="step === 1">
         <h3>DELIVERY ADDRESS</h3>
-        <input type="text" placeholder="* ADDRESS">
+        <input v-model="checkout.address" type="text" placeholder="* ADDRESS">
 
         <h3>CARD INFORMATION</h3>
         <input type="email" placeholder="* NAME ON CARD">
