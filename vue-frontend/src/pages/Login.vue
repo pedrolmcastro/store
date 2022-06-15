@@ -167,7 +167,6 @@
         padding: 1em;
         width: 120px;
         min-width: 30%;
-        text-transform: uppercase;
     }
 
 

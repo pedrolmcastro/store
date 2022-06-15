@@ -1,51 +1,56 @@
 <script setup>
-import Search from '@/components/Search.vue';
-import Card from '@/components/Card.vue';
-import Data from '@/assets/datastore'
-import { computed } from 'vue';
+    import { computed } from "vue";
 
-const products = computed(() => Data.products.filter(item => item.quantity > 0).slice(0, 4))
+    import Data from "@/assets/datastore";
+    import Card from "@/components/Card.vue";
+    import Search from "@/components/Search.vue";
 
+
+    const products = computed(() => Data.products.filter(item => item.quantity > 0).slice(0, 4));
 </script>
 
+
 <template>
-  <div class="window">
-    <div id="banner">
-      <Search id="banner-search"></Search>
-    </div>
-    <div id="featured-products">
-      <Card  v-for="product in products" :key="product.id" :id="product.id" :name="product.name" :price="product.price_cents / 100" />
-    </div>
-  </div>
+    <main class="window">
+        <section id="banner">
+            <Search id="search"></Search>
+        </section>
+
+        <section id="products">
+            <Card v-for="product in products" :key="product.id" :id="product.id" :name="product.name" :price="product.price_cents / 100" />
+        </section>
+    </main>
 </template>
 
+
 <style scoped>
+    #banner {
+        width: 100%;
+        height: 40vh;
+        display: flex;
+        align-items: center;
+        background-size: cover;
+        justify-content: center;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-image: url("@/assets/banner.jpeg");
+    }
 
-#banner {
-  width: 100%;
-  height: 40vh;
-  background: url(../assets/banner.jpg) no-repeat;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-#banner-search {
-  font-size: 32px;
-  height: 3rem;
-}
+    #banner :deep(input), #banner :deep(button) {
+        font-size: 1.3rem;
+    }
 
-#banner :deep(input), #banner :deep(button) {
-  font-size: 1.5rem;
-}
+    #search {
+        height: 2.6rem;
+    }
 
-#featured-products {
-  padding: 2rem 0;
-  height: auto;
-  width: 100%;
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-}
 
+    #products {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 3rem 0;
+        justify-content: space-evenly;
+    }
 </style>

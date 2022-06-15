@@ -65,8 +65,8 @@
 
     #info {
         height: 33%;
-        padding: 1rem;
         display: flex;
+        padding: 0.75rem;
         flex-direction: column;
         justify-content: space-between;
     }
