@@ -32,11 +32,11 @@ const router = createRouter({
 
 // Font Awesome Setup
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCircleUser, faCartShopping, faBars, faMagnifyingGlass, faCaretDown } from '@fortawesome/free-solid-svg-icons'
+import { faCircleUser, faCartShopping, faBars, faMagnifyingGlass, faCaretDown, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 // import faRegular from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faCircleUser, faCartShopping, faBars, faMagnifyingGlass, faCaretDown)
+library.add(faCircleUser, faCartShopping, faBars, faMagnifyingGlass, faCaretDown, faMinus, faPlus)
 
 createApp(App)
   .use(router)

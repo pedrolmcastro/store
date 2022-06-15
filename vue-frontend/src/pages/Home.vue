@@ -3,7 +3,7 @@ import Search from '@/components/Search.vue';
 import Card from '@/components/Card.vue';
 import Data from '@/assets/datastore'
 
-let products = Data.products
+let products = [...Data.products]
 while (products.length > 4)
   products.pop()
 

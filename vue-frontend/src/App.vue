@@ -74,8 +74,15 @@ html, body {
   filter: brightness(90%);
 }
 
+.disabled-button, .disabled-button:hover, .disabled-button:active {
+  background-color: grey;
+  filter: brightness(100%);
+  cursor: not-allowed;
+}
+
 .window {
   flex-grow: 1;
 }
+
 
 </style>

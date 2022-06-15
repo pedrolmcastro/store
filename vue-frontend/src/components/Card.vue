@@ -10,7 +10,9 @@ const props = defineProps({
 })
 
 let addToCart = () => {
-    Store.cart.push({ id: props.id, quantity: 1 })
+    if (!Store.cart.find(item => item.id === props.id)) {
+        Store.cart.push({ id: props.id, quantity: 1 })
+    }
 }
 
 </script>
