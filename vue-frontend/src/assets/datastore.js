@@ -58,7 +58,7 @@ export default {
             "name": "Pato",
             "address": "Rua dos Patos, 1 - Pato Branco - RJ",
             "phone": "(16) 99777-1111",
-            "mail": "pato@mail.com",
+            "email": "pato@mail.com",
             "password": "1234pato",
             "isAdmin": false
         },
@@ -67,7 +67,7 @@ export default {
             "name": "Calango Rios",
             "address": "Rua Calango, 1 - Calanguineos - MG",
             "phone": "(36) 99222-1111",
-            "mail": "calango@mail.com",
+            "email": "calango@mail.com",
             "password": "1234calango",
             "isAdmin": true
         }

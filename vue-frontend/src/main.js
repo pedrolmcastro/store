@@ -35,10 +35,12 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCircleUser, faCartShopping, faBars, faMagnifyingGlass, faCaretDown, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 // import faRegular from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import Maska from 'maska'
 
 library.add(faCircleUser, faCartShopping, faBars, faMagnifyingGlass, faCaretDown, faMinus, faPlus)
 
 createApp(App)
   .use(router)
+  .use(Maska)
   .component("font-awesome-icon", FontAwesomeIcon)
   .mount("#app")

@@ -25,6 +25,7 @@ import Footer from './components/Footer.vue'
     --grey: #E0E0E0;
     --dark-grey: #2D2D2D;
     --black: #1F1F1F;
+    --shadow: #00000033;
 }
 
 * {
