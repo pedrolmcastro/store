@@ -11,26 +11,30 @@
     const phoneregex = /^\([0-9]{2}\) [0-9]{5}-[0-9]{4}$/;
     const emailregex = /^.+@.+\..+$/;
 
+    let show = ref("login");
+
+
     const login = reactive({
         error: "",
         email: "",
         password: "",
-
-        validate() {
-            if (this.email === "")            return "Please, inform an email.";
-            if (this.password === "")         return "Please, inform a password.";
-            if (!emailregex.test(this.email)) return 'Sorry, invalid email format, expected something like "user@email.com".';
-
-            const user = Data.users.find(user => user.email === this.email);
-
-            if (user === undefined)              return "Sorry, the user informed was not found.";
-            if (user.password !== this.password) return "Sorry, the password informed is incorrect.";
-
-            Store.isLoggedIn = true;
-            router.push('/');
-            return "";
-        },
     });
+
+    login.validate = function() {
+        if (this.email === "")            return this.error = "Please, inform an email.";
+        if (this.password === "")         return this.error = "Please, inform a password.";
+        if (!emailregex.test(this.email)) return this.error = 'Sorry, invalid email format, expected something like "user@email.com".';
+
+        const user = Data.users.find(user => user.email === this.email);
+
+        if (user === undefined)              return this.error = "Sorry, the user informed was not found.";
+        if (user.password !== this.password) return this.error = "Sorry, the password informed is incorrect.";
+
+        Store.isLoggedIn = true;
+        router.push('/');
+        return "";
+    };
+
 
     const register = reactive({
         name: "",
@@ -40,34 +44,32 @@
         address: "",
         confirm: "",
         password: "",
-
-        validate() {
-            if (this.name === "")                                                 return "Please, inform a name.";
-            if (this.email === "")                                                return "Please, inform an email.";
-            if (this.password === "")                                             return "Please, inform a password.";
-            if (this.confirm === "")                                              return "Please, confirm your password.";
-            if (this.phone !== "" && !phoneregex.test(this.phone))                return 'Sorry, invalid phone format, expected something like "(12) 12345-1234".';
-            if (!emailregex.test(this.email))                                     return 'Sorry, invalid email format, expected something like "user@email.com".';
-            if (this.password !== this.confirm)                                   return "Sorry, the password informed and its confirmation do not match.";
-            if (Data.users.find(user => user.email === this.email) !== undefined) return "Sorry, the informed email has already been used.";
-
-            Data.users.push({
-                id:       Data.users.length.toString(), // ID sequencial
-                name:     this.name,
-                address:  this.address,
-                phone:    this.phone,
-                email:    this.email,
-                password: this.password,
-                isAdmin:  false
-            });
-
-            Store.isLoggedIn = true;
-            router.push('/');
-            return "";
-        },
     });
 
-    let show = ref("login");
+    register.validate = function() {
+        if (this.name === "")                                                 return this.error = "Please, inform a name.";
+        if (this.email === "")                                                return this.error = "Please, inform an email.";
+        if (this.password === "")                                             return this.error = "Please, inform a password.";
+        if (this.confirm === "")                                              return this.error = "Please, confirm your password.";
+        if (this.phone !== "" && !phoneregex.test(this.phone))                return this.error = 'Sorry, invalid phone format, expected something like "(12) 12345-1234".';
+        if (!emailregex.test(this.email))                                     return this.error = 'Sorry, invalid email format, expected something like "user@email.com".';
+        if (this.password !== this.confirm)                                   return this.error = "Sorry, the password informed and its confirmation do not match.";
+        if (Data.users.find(user => user.email === this.email) !== undefined) return this.error = "Sorry, the informed email has already been used.";
+
+        Data.users.push({
+            id:       Data.users.length.toString(), // ID sequencial
+            name:     this.name,
+            address:  this.address,
+            phone:    this.phone,
+            email:    this.email,
+            password: this.password,
+            isAdmin:  false,
+        });
+
+        Store.isLoggedIn = true;
+        router.push('/');
+        return "";
+    };
 </script>
 
 <template>
@@ -79,23 +81,23 @@
             </div>
 
             <div class="inputs" v-if="show === 'login'">
-                <input type="email" placeholder="* EMAIL" v-model="login.email">
-                <input type="password" placeholder="* PASSWORD" v-model="login.password">
+                <input type="email" placeholder="EMAIL *" v-model="login.email">
+                <input type="password" placeholder="PASSWORD *" v-model="login.password">
 
                 <div class="error"> <small> {{ login.error }} </small> </div>
-                <button class="action-button" @click="login.error = login.validate()"> LOG IN </button>
+                <button class="action-button" @click="login.validate()"> LOG IN </button>
             </div>
 
             <div class="inputs" v-else>
-                <input type="text" placeholder="* NAME" v-model="register.name">
+                <input type="text" placeholder="NAME *" v-model="register.name">
                 <input type="text" placeholder="ADDRESS" v-model="register.address">
                 <input type="tel" placeholder="PHONE" v-model="register.phone" v-maska="'(##) #####-####'">
-                <input type="email" placeholder="* EMAIL" v-model="register.email">
-                <input type="password" placeholder="* PASSWORD" v-model="register.password">
-                <input type="password" placeholder="* CONFIRM PASSWORD" v-model="register.confirm">
+                <input type="email" placeholder="EMAIL *" v-model="register.email">
+                <input type="password" placeholder="PASSWORD *" v-model="register.password">
+                <input type="password" placeholder="CONFIRM PASSWORD *" v-model="register.confirm">
 
                 <div class="error"> <small> {{ register.error }} </small> </div>
-                <button class="action-button" @click="register.error = register.validate()"> REGISTER </button>
+                <button class="action-button" @click="register.validate()"> REGISTER </button>
             </div>
         </section>
     </main>
