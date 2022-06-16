@@ -75,7 +75,7 @@
 
     #title img {
         width: 25px;
-        margin: 0 10px;
+        margin-right: 10px;
     }
 
     #search {
