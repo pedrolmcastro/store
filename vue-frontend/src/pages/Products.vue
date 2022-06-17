@@ -48,6 +48,8 @@
     }
 
 
+    /* Top */
+
     #top {
         width: 100%;
         text-align: center;
@@ -57,7 +59,7 @@
         margin: 20px;
         border: none;
         font-size: 1rem;
-        color: var(--dark-grey);
+        color: var(--grey);
         background-color: transparent;
     }
 
@@ -65,6 +67,8 @@
         outline: none;
     }
 
+
+    /* Products */
 
     #products {
         display: grid;

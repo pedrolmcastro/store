@@ -87,7 +87,7 @@
                 <input type="password" placeholder="Password *" v-model="login.password">
 
                 <small class="error"> {{ login.error }} </small>
-                <button class="action-button" @click.stop.prevent="login.validate()"> Log In </button>
+                <button class="action large" @click.stop.prevent="login.validate()"> Log In </button>
             </form>
 
             <form class="inputs" v-else>
@@ -99,7 +99,7 @@
                 <input type="password" placeholder="Confirm Password *" v-model="register.confirm">
 
                 <small class="error"> {{ register.error }} </small>
-                <button class="action-button" @click.stop.prevent="register.validate()"> Register </button>
+                <button class="action large" @click.stop.prevent="register.validate()"> Register </button>
             </form>
         </section>
     </main>
@@ -112,24 +112,15 @@
         justify-content: center;
     }
 
-    section {
-        margin: 5vh;
-        width: 30vw;
-        min-height: 70vh;
-        box-sizing: border-box;
-        background-color: var(--white);
-    }
-
-
     .options button {
         width: 50%;
     }
 
 
-    .action-button {
-        margin: 10%;
-        padding: 1em;
-        width: 120px;
-        min-width: 30%;
+    section {
+        margin: 5vh;
+        width: 30vw;
+        min-height: 70vh;
+        background-color: var(--white);
     }
 </style>

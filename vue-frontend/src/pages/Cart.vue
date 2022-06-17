@@ -16,7 +16,6 @@
 
     let step = ref(0);
     let total = computed(() => Store.cart.reduce((accumulator, item) => accumulator + item.quantity * item.product.price_cents, 0));
-    const cartItems = ref(""); // TODO: Delete
 
 
     const checkout = reactive({
@@ -84,8 +83,8 @@
                 <button :class="{ 'selected': step === 2 }" :disabled="step < 2" @click="step = 2"> Confirmation </button>
             </div>
 
-            <div class="inputs" v-if="step === 0">
-                <div class="listing" v-for="item in Store.cart" :key="item.product.id">
+            <div class="container" v-if="step === 0">
+                <div id="listing" v-for="item in Store.cart" :key="item.product.id">
                     <img :src="require(`@/assets/products/${item.product.id}.jpg`)">
 
                     <div id="info">
@@ -104,10 +103,10 @@
                 <div id="total" v-else> <strong> TOTAL: </strong> <span> {{ Store.price(total) }} </span> </div>
 
                 <p v-if="!Store.logged()"> Please, <router-link id="link" to="/login"> log in</router-link> to place your order. </p>
-                <button :class="{ 'action-button': true, 'disabled-button': !checkout.enable }" :disabled="!checkout.enable" @click.stop.prevent="step = 1"> Checkout </button>
+                <button :class="{ 'action': true, 'disabled': !checkout.enable, 'large': true }" :disabled="!checkout.enable" @click.stop.prevent="step = 1"> Checkout </button>
             </div>
 
-            <div class="inputs" v-else-if="step === 1">
+            <div class="container" v-else-if="step === 1">
                 <form class="inputs">
                     <h1> Delivery Address </h1>
                     <input type="text" placeholder="Address *" v-model="checkout.address" >
@@ -122,17 +121,17 @@
                 </form>
 
                 <small class="error"> {{ checkout.error }} </small>
-                <button class="action-button" @click.stop.prevent="checkout.validate()"> Validade </button>
+                <button class="action large" @click.stop.prevent="checkout.validate()"> Validade </button>
             </div>
 
-            <div class="inputs" v-else-if="step === 2">
+            <div class="container" v-else-if="step === 2">
                 <ul type="none">
                     <li> <strong> Delivery Address: </strong> {{ checkout.address }} </li>
                     <li> <strong> Credit Card: </strong> #### #### #### {{ checkout.number.slice(-4) }} </li>
                     <li> <strong> Final Price: </strong> {{ Store.price(total) }} </li>
                 </ul>
 
-                <button class="action-button" @click.stop.prevent="confirm()"> Confirm </button>
+                <button class="action large" @click.stop.prevent="confirm()"> Confirm </button>
             </div>
         </section>
     </main>
@@ -145,6 +144,11 @@
         justify-content: center;
     }
 
+    .options button {
+        width: calc(100% / 3);
+    }
+
+
     section {
         margin: 5vh;
         width: 40vw;
@@ -153,12 +157,9 @@
     }
 
 
-    .options button {
-        width: calc(100% / 3);
-    }
+    /* Cart */
 
-
-    .listing {
+    #listing {
         width: 90%;
         height: 80px;
         display: flex;
@@ -166,7 +167,7 @@
         justify-content: space-between;
     }
 
-    .listing img {
+    #listing img {
         width: 80px;
         height: 80px;
     }
@@ -221,6 +222,8 @@
     }
 
 
+    /* Checkout */
+
     form {
         width: 100%;
     }
@@ -231,6 +234,8 @@
     }
 
 
+    /* Confirm */
+
     ul {
         width: 90%;
     }
@@ -238,17 +243,5 @@
     ul li strong {
         font-weight: 500;
         font-size: 1.2rem;
-    }
-
-
-    .action-button {
-        margin: 10%;
-        padding: 1em;
-        min-width: 30%;
-        width: 120px;
-    }
-
-    .disabled-button {
-        margin-top: 2%;
     }
 </style>

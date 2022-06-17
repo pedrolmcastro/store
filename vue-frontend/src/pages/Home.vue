@@ -24,6 +24,8 @@
 
 
 <style scoped>
+    /* Banner */
+
     #banner {
         width: 100%;
         height: 40vh;
@@ -36,7 +38,6 @@
         background-image: url("@/assets/banner.jpeg");
     }
 
-
     #banner :deep(input), #banner :deep(button) {
         font-size: 1.3rem;
     }
@@ -45,6 +46,8 @@
         height: 2.6rem;
     }
 
+
+    /* Products */
 
     #products {
         width: 100%;

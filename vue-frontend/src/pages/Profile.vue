@@ -16,15 +16,13 @@ const logout = () => {
 <template>
   <div class="window">
     <p v-for="purchase in purchases" :key="purchase.id"> {{ purchase }} </p>
-    <button @click="logout" class="action-button">LOG OUT</button>
+    <button @click="logout" class="action">LOG OUT</button>
   </div>
 </template>
 
 
 <style scoped>
-
-.action-button {
+.action {
   padding: 1rem;
 }
 </style>
-

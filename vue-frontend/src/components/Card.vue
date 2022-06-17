@@ -18,7 +18,7 @@
 
             <div id="bottom">
                 <strong> {{ Store.price(props.product.price_cents) }} </strong>
-                <button class="action-button" @click="Store.add(props.product)"> Add To Cart </button>
+                <button class="action" @click="Store.add(props.product)"> Add To Cart </button>
             </div>
         </div>
     </div>
@@ -28,8 +28,8 @@
 <style scoped>
     #card {
         bottom: 0;
-        width: 300px;
         margin: 1rem;
+        width: 300px;
         height: 300px;
         position: relative;
         transition: bottom .3s ease;
@@ -78,7 +78,7 @@
         font-size: 1.3rem;
     }
 
-    .action-button {
+    .action {
         padding: 0.2rem 0.5rem;
     }
 </style>

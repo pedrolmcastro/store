@@ -44,7 +44,7 @@
 
     .button:hover {
         cursor: pointer;
-        color: var(--grey);
+        filter: brightness(70%);
     }
 
 

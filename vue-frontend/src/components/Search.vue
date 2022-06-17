@@ -43,7 +43,7 @@
         height: 80%;
         margin: 10% 0;
         cursor: pointer;
-        color: var(--dark-grey);
+        color: var(--grey);
         border: 0px solid transparent;
         background-color: var(--white);
     }

@@ -13,10 +13,7 @@
 <template>
     <main class="window">
         <section id="product" class="shadow">
-            <div id="image">
-                <img :src="require(`@/assets/products/${product.id}.jpg`)">
-                <!-- TODO: Multiple Images -->
-            </div>
+            <div id="image"> <img :src="require(`@/assets/products/${product.id}.jpg`)"> </div>
 
             <div id="text">
                 <div>
@@ -29,7 +26,7 @@
                        <h1> {{ Store.price(product.price_cents) }} </h1>
                        <p> {{ product.quantity > 0 ? `In Stock: ${product.quantity} Units` : "Out of Stock" }} </p>
                     </div>
-                    <button class="action-button" @click="Store.add(product)"> Buy </button>
+                    <button class="action" @click="Store.add(product)"> Buy </button>
                 </div>
             </div>
         </section>
@@ -52,12 +49,20 @@
         flex-direction: column;
     }
 
+    .action {
+        font-size: 2rem;
+        padding: 0rem 3rem;
+    }
+
 
     section {
         width: 65%;
         padding: 2rem 3rem;
         background-color: var(--white);
     }
+
+
+    /* Product */
 
     #product {
         display: flex;
@@ -100,11 +105,8 @@
         margin: 0;
     }
 
-    .action-button {
-        font-size: 2rem;
-        padding: 0rem 3rem;
-    }
 
+    /* Description */
 
     #description {
         margin: 1rem 0 5rem 0;
