@@ -54,8 +54,8 @@ export default {
             name: "Admin",
             password: "admin",
             email: "admin@email.com",
-            phone: "(11) 11111-1111",
-            address: "Rua dos Admins, 1 - Adminlandia - AL",
+            phone: "(00) 00000-0000",
+            address: "Rua dos Admins, 0 - Adminlandia - AL",
         },
         {
             id: '1',
@@ -63,7 +63,7 @@ export default {
             name: "User",
             password: "user",
             email: "user@email.com",
-            phone: "(22) 22222-2222",
+            phone: "(11) 11111-1111",
             address: "Rua dos Users, 1 - Userlandia - UL",
         },
     ],
@@ -72,16 +72,20 @@ export default {
         {
             id: '0',
             user: '1',
+            total: 35000,
+            date: "2001-01-01",
             products: [
                 {
                     id: '0',
                     quantity: 1,
                     paid: 15000,
+                    name: "Intel I5 11400F",
                 },
                 {
                     id: '4',
                     quantity: 2,
                     paid: 20000,
+                    name: "Asrock H110M-HG4",
                 },
             ],
         },

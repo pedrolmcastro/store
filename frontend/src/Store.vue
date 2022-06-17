@@ -20,6 +20,11 @@
         return '$' + (cents / 100).toFixed(2);
     }
 
+    global.date = function(date) {
+        date = new Date(date + " 00:00"); // Convert to Date Object
+        return String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + String(date.getFullYear());
+    }
+
 
     export default global;
 </script>

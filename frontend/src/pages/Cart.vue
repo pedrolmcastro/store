@@ -33,8 +33,8 @@
         if (this.address === "") return this.error = "Please, inform an address.";
 
         // Credit Card
-        const year = parseInt(`20${this?.expiration.slice(3, 5)}`);
-        const month = parseInt(this?.expiration.slice(0, 2));
+        const year = parseInt("20" + this.expiration.slice(3, 5));
+        const month = parseInt(this.expiration.slice(0, 2));
 
         if (this.cvv === "")                         return this.error = "Please, inform a CVV.";
         if (this.name === "")                        return this.error = "Please, inform a name.";
@@ -55,7 +55,9 @@
         Data.purchases.push({
             id: Data.purchases.length.toString(), // Sequential ID
             user: Store.user,
-            products: Store.cart.map(item => ({ id: item.product.id, quantity: item.quantity, paid: item.product.price, })),
+            total: total.value,
+            date: new Date().toISOString().slice(0, 10), // Current Date in YYYY-MM-DD
+            products: Store.cart.map(item => ({ id: item.product.id, quantity: item.quantity, paid: item.product.price * item.quantity, name: item.product.name, })),
         });
 
         Store.cart = [];
@@ -170,6 +172,7 @@
     #listing img {
         width: 80px;
         height: 80px;
+        object-fit: contain;
     }
 
 

@@ -14,6 +14,10 @@ library.add(faCircleUser, faCartShopping, faBars, faMagnifyingGlass, faCaretDown
 import Maska from "maska";
 
 
+// Collapsible Panel
+import VueCollapsiblePanel from "@dafcoe/vue-collapsible-panel";
+
+
 import App from "@/App.vue";
 import Home from "@/pages/Home.vue";
 import Cart from "@/pages/Cart.vue";
@@ -44,5 +48,6 @@ const router = createRouter({
 createApp(App)
     .use(router)
     .use(Maska)
+    .use(VueCollapsiblePanel)
     .component("font-awesome-icon", FontAwesomeIcon)
     .mount("#app");
