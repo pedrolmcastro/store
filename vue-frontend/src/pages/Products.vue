@@ -12,7 +12,7 @@
     const products = computed(() => {
         // TODO: Filter Categories
         let filtered = Data.products.filter(product => product.name.toLowerCase().includes(route.query?.search.toLowerCase()) && product.quantity > 0);
-        filtered.sort((x, y) => order.value.includes("a-z") ? x.name.localeCompare(y.name, undefined, { sensitivity: "base" }) : x.price_cents - y.price_cents);
+        filtered.sort((x, y) => order.value.includes("a-z") ? x.name.localeCompare(y.name, undefined, { sensitivity: "base" }) : x.price - y.price);
         return filtered;
     });
 </script>

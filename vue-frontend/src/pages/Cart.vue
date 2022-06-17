@@ -15,7 +15,7 @@
     }
 
     let step = ref(0);
-    let total = computed(() => Store.cart.reduce((accumulator, item) => accumulator + item.quantity * item.product.price_cents, 0));
+    let total = computed(() => Store.cart.reduce((accumulator, item) => accumulator + item.quantity * item.product.price, 0));
 
 
     const checkout = reactive({
@@ -52,10 +52,10 @@
     function confirm() {
         Store.cart.forEach(item => item.product.quantity -= item.quantity);
 
-        Data.previous_purchases.push({
-            id: Data.previous_purchases.length.toString(), // Sequential ID
+        Data.purchases.push({
+            id: Data.purchases.length.toString(), // Sequential ID
             user: Store.user,
-            products: Store.cart.map(item => ({ id: item.product.id, quantity: item.quantity, paidPrice: item.product.price_cents, })),
+            products: Store.cart.map(item => ({ id: item.product.id, quantity: item.quantity, paid: item.product.price, })),
         });
 
         Store.cart = [];
@@ -96,7 +96,7 @@
                         </div>
                     </div>
 
-                    <span id="price"> {{ Store.price(item.product.price_cents * item.quantity) }} </span>
+                    <span id="price"> {{ Store.price(item.product.price * item.quantity) }} </span>
                 </div>
 
                 <h1 v-if="Store.cart.length === 0"> Empty cart </h1>

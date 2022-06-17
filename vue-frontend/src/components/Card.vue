@@ -17,7 +17,7 @@
             <h1> {{ props.product.name }} </h1>
 
             <div id="bottom">
-                <strong> {{ Store.price(props.product.price_cents) }} </strong>
+                <strong> {{ Store.price(props.product.price) }} </strong>
                 <button class="action" @click="Store.add(props.product)"> Add To Cart </button>
             </div>
         </div>

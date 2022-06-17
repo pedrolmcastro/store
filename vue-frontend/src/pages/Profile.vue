@@ -4,7 +4,7 @@ import Store from '@/Store.vue'
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 
-const purchases = computed(() => Data.previous_purchases.filter(purchase => Store.user === purchase.user))
+const purchases = computed(() => Data.purchases.filter(purchase => Store.user === purchase.user))
 
 const router = useRouter()
 const logout = () => {
