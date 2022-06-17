@@ -11,8 +11,8 @@
         return this.user !== undefined;
     }
     
-    global.add = function(id) {
-        if (this.cart.find(item => item.id === id) === undefined) this.cart.push({ id: id, quantity: 1 });
+    global.add = function(product) {
+        if (this.cart.find(item => item.product.id === product.id) === undefined) this.cart.push({ product: product, quantity: 1 });
         // TODO: Confirmation Pop Up
     }
 

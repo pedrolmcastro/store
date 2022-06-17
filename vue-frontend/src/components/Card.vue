@@ -3,26 +3,22 @@
     import Store from "@/Store.vue";
 
 
-    const props = defineProps({
-        id: String,
-        name: String,
-        price: Number,
-    });
+    const props = defineProps({ product: Object, });
 </script>
 
 
 <template>
     <div id="card" class="shadow">
-        <router-link :to="`/products/${props.id}`">
-            <div id="image"> <img :src="require(`@/assets/products/${props.id}.jpg`)"> </div>
+        <router-link :to="`/products/${props.product.id}`">
+            <div id="image"> <img :src="require(`@/assets/products/${props.product.id}.jpg`)"> </div>
         </router-link>
 
         <div id="info">
-            <h1> {{ props.name }} </h1>
+            <h1> {{ props.product.name }} </h1>
 
             <div id="bottom">
-                <strong> {{ Store.price(props.price) }} </strong>
-                <button class="action-button" @click="Store.add(props.id)"> Add To Cart </button>
+                <strong> {{ Store.price(props.product.price_cents) }} </strong>
+                <button class="action-button" @click="Store.add(props.product)"> Add To Cart </button>
             </div>
         </div>
     </div>
@@ -66,8 +62,8 @@
     }
 
     #info h1 {
-        font-size: 1.2rem;
         font-weight: 700;
+        font-size: 1.2rem;
     }
 
 

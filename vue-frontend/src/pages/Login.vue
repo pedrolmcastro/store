@@ -8,8 +8,10 @@
     const router = useRouter();
 
 
-    const phoneregex = /^\([0-9]{2}\) [0-9]{5}-[0-9]{4}$/;
-    const emailregex = /^.+@.+\..+$/;
+    const regex = {
+        phone: /^\([0-9]{2}\) [0-9]{5}-[0-9]{4}$/,
+        email: /^.+@.+\..+$/,
+    }
 
     let show = ref("login");
 
@@ -21,9 +23,9 @@
     });
 
     login.validate = function() {
-        if (this.email === "")            return this.error = "Please, inform an email.";
-        if (this.password === "")         return this.error = "Please, inform a password.";
-        if (!emailregex.test(this.email)) return this.error = 'Sorry, invalid email format, expected something like "user@email.com".';
+        if (this.email === "")             return this.error = "Please, inform an email.";
+        if (this.password === "")          return this.error = "Please, inform a password.";
+        if (!regex.email.test(this.email)) return this.error = 'Sorry, invalid email format, expected something like "user@email.com".';
 
         const user = Data.users.find(user => user.email === this.email);
 
@@ -50,8 +52,8 @@
         if (this.email === "")                                                return this.error = "Please, inform an email.";
         if (this.password === "")                                             return this.error = "Please, inform a password.";
         if (this.confirm === "")                                              return this.error = "Please, confirm your password.";
-        if (this.phone !== "" && !phoneregex.test(this.phone))                return this.error = 'Sorry, invalid phone format, expected something like "(12) 12345-1234".';
-        if (!emailregex.test(this.email))                                     return this.error = 'Sorry, invalid email format, expected something like "user@email.com".';
+        if (this.phone !== "" && !regex.phone.test(this.phone))               return this.error = 'Sorry, invalid phone format, expected something like "(12) 12345-1234".';
+        if (!regex.email.test(this.email))                                    return this.error = 'Sorry, invalid email format, expected something like "user@email.com".';
         if (this.password !== this.confirm)                                   return this.error = "Sorry, the password informed and its confirmation do not match.";
         if (Data.users.find(user => user.email === this.email) !== undefined) return this.error = "Sorry, the informed email has already been used.";
 
@@ -75,7 +77,7 @@
 <template>
     <main class="window">
         <section class="shadow">
-            <div id="options">
+            <div class="options">
                 <button :class="{ 'selected': show === 'login' }" @click="show = 'login'"> Log In </button>
                 <button :class="{ 'selected': show === 'register' }" @click="show = 'register'"> Register </button>
             </div>
@@ -84,7 +86,7 @@
                 <input type="email" placeholder="Email *" v-model="login.email">
                 <input type="password" placeholder="Password *" v-model="login.password">
 
-                <div class="error"> <small> {{ login.error }} </small> </div>
+                <small class="error"> {{ login.error }} </small>
                 <button class="action-button" @click.stop.prevent="login.validate()"> Log In </button>
             </form>
 
@@ -96,7 +98,7 @@
                 <input type="password" placeholder="Password *" v-model="register.password">
                 <input type="password" placeholder="Confirm Password *" v-model="register.confirm">
 
-                <div class="error"> <small> {{ register.error }} </small> </div>
+                <small class="error"> {{ register.error }} </small>
                 <button class="action-button" @click.stop.prevent="register.validate()"> Register </button>
             </form>
         </section>
@@ -119,46 +121,8 @@
     }
 
 
-    #options {
-        display: flex;
-        margin-bottom: 10%;
-        align-items: center;
-        justify-content: center;
-    }
-
-    #options button {
-        flex-grow: 1;
-        border: none;
-        padding: 10px;
-        font-size: 1rem;
-        cursor: pointer;
-        text-transform: uppercase;
-        background-color: var(--white);
-    }
-
-    .selected {
-        color: var(--red);
-        border-bottom: 2px solid var(--red) !important;
-    }
-
-
-    .inputs {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-    }
-
-    .inputs input {
-        all: unset;
-        width: 70%;
-        margin: 5px;
-        padding: 10px;
-        font-size: 1rem;
-        border: 1px solid var(--dark-grey);
-    }
-
-    .inputs input::placeholder {
-        text-transform: uppercase;
+    .options button {
+        width: 50%;
     }
 
 
@@ -167,12 +131,5 @@
         padding: 1em;
         width: 120px;
         min-width: 30%;
-    }
-
-
-    .error {
-        width: 100%;
-        padding: 20px;
-        text-align: center;
     }
 </style>

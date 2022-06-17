@@ -29,7 +29,7 @@
                        <h1> {{ Store.price(product.price_cents) }} </h1>
                        <p> {{ product.quantity > 0 ? `In Stock: ${product.quantity} Units` : "Out of Stock" }} </p>
                     </div>
-                    <button class="action-button" @click="Store.add(product.id)"> Buy </button>
+                    <button class="action-button" @click="Store.add(product)"> Buy </button>
                 </div>
             </div>
         </section>

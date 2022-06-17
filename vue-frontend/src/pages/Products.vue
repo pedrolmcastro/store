@@ -29,7 +29,7 @@
             </div>
 
             <div id="products">
-                <Card v-for="product in products" :key="product.id" :id="product.id" :name="product.name" :price="product.price_cents" />
+                <Card v-for="product in products" :key="product.id" :product="product" />
             </div>
         </section>
     </main>

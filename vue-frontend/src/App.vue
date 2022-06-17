@@ -56,6 +56,29 @@ html, body {
   background-color: var(--bg-color);
 }
 
+
+.options {
+  display: flex;
+  margin-bottom: 10%;
+  align-items: center;
+  justify-content: center;
+}
+
+.options button {
+  border: none;
+  padding: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  background-color: var(--white);
+}
+
+.selected {
+  color: var(--red);
+  border-bottom: 2px solid var(--red) !important;
+}
+
+
 .action-button {
   all: unset;
   background-color: var(--red);
@@ -91,6 +114,31 @@ html, body {
   overflow: hidden;
   border-radius: 5px;
   box-shadow: 2px 2px 2px var(--shadow);
+}
+
+.error {
+  padding: 20px;
+  text-align: center;
+}
+
+
+.inputs {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.inputs input {
+  all: unset;
+  width: 70%;
+  margin: 5px;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid var(--dark-grey);
+}
+
+.inputs input::placeholder {
+  text-transform: uppercase;
 }
 
 
