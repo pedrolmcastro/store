@@ -1,20 +1,15 @@
 <script setup>
     import { ref } from "vue";
-
-    let query = ref("");
-
-    function search(query) {
-        return `/products/?search=${query}`;
-    }
+    let search = ref("");
 </script>
 
 
 <template>
     <form class="shadow">
-        <router-link :to="search(query)">
+        <router-link :to="`/products/?search=${search}`">
             <button> <font-awesome-icon icon="magnifying-glass" /> </button>
         </router-link>
-        <input type="search" placeholder="Search Products" v-model="query">
+        <input type="search" placeholder="Search Products" v-model="search">
     </form>
 </template>
 

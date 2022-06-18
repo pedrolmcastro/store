@@ -31,7 +31,7 @@
                 <textarea rows="2" id="summary" type="text" placeholder="Summary" v-model="product.summary" />
                 <textarea rows="5" id="description" type="text" placeholder="description" v-model="product.description" />
 
-                <div id="test">    
+                <div id="bottom">    
                     <label for="quantity"> Quantity: </label>
                     <input id="quantity" type="number" min="0" v-model="product.quantity" />
 
@@ -43,21 +43,21 @@
                         <option disabled selected value=""> Category </option>
                         
                         <!-- Hardware -->
-                        <option> Cooler </option>
-                        <option value="Processor"> Processor </option>
-                        <option> Hard Drive </option>
-                        <option> Motherboard </option>
-                        <option> Power Supply </option>
-                        <option> Memory Stick </option>
-                        <option> Graphics Card </option>
-                        <option> Solid State Drive </option>
+                        <option value="cooler"> Cooler </option>
+                        <option value="processor"> Processor </option>
+                        <option value="harddrive"> Hard Drive </option>
+                        <option value="motherboard"> Motherboard </option>
+                        <option value="powersupply"> Power Supply </option>
+                        <option value="memorystick"> Memory Stick </option>
+                        <option value="graphicscard"> Graphics Card </option>
+                        <option value="solidstatedrive"> Solid State Drive </option>
 
                         <!-- Peripherals -->
-                        <option> Mouse </option>
-                        <option> Monitor </option>
-                        <option> Keyboard </option>
-                        <option> Mousepad </option>
-                        <option> Headphone </option>
+                        <option value="mouse"> Mouse </option>
+                        <option value="monitor"> Monitor </option>
+                        <option value="keyboard"> Keyboard </option>
+                        <option value="mousepad"> Mousepad </option>
+                        <option value="headphone"> Headphone </option>
                     </select>
                 </div>
             </form>
@@ -133,7 +133,7 @@
         outline: none;
     }
 
-    #test {
+    #bottom {
         padding: 0 5px;
     }
 

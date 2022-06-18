@@ -10,9 +10,14 @@
     let order = ref("order by: a-z");
 
     const products = computed(() => {
-        // TODO: Filter Categories
-        let filtered = Data.products.filter(product => product.name.toLowerCase().includes(route.query?.search.toLowerCase()) && product.quantity > 0);
-        filtered.sort((x, y) => order.value.includes("a-z") ? x.name.localeCompare(y.name, undefined, { sensitivity: "base" }) : x.price - y.price);
+        let filtered = Data.products.filter(product => product.quantity > 0);
+
+        if ("search" in route.query)        filtered = filtered.filter(product => product.name.toLowerCase().includes(route.query.search.toLowerCase()));
+        else if ("category" in route.query) filtered = filtered.filter(product => product.category === route.query.category);
+
+        if (order.value.includes("a-z"))        filtered.sort((first, second) => first.name.localeCompare(second.name, undefined, { sensitivity: "base" }));
+        else if (order.value.includes("price")) filtered.sort((first, second) => first.price - second.price);
+
         return filtered;
     });
 </script>
