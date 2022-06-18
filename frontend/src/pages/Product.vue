@@ -13,7 +13,7 @@
 <template>
     <main class="window">
         <section id="product" class="shadow">
-            <div id="image"> <img :src="require(`@/assets/products/${product.id}.jpg`)"> </div>
+            <div id="image"> <img :src="require('@/assets/products/' + product.image)"> </div>
 
             <div id="text">
                 <div>

@@ -5,22 +5,20 @@ import { createRouter, createWebHistory } from "vue-router";
 // Font Awesome
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faCircleUser, faCartShopping, faBars, faMagnifyingGlass, faCaretDown, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faMagnifyingGlass, faCartShopping, faCircleUser, faGears, faPlus, faMinus, faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faCircleUser, faCartShopping, faBars, faMagnifyingGlass, faCaretDown, faMinus, faPlus);
+library.add(faBars, faMagnifyingGlass, faCartShopping, faCircleUser, faGears, faPlus, faMinus, faPencil, faTrash);
 
 
-// Maska
+// Libraries
 import Maska from "maska";
-
-
-// Collapsible Panel
 import VueCollapsiblePanel from "@dafcoe/vue-collapsible-panel";
 
 
 import App from "@/App.vue";
 import Home from "@/pages/Home.vue";
 import Cart from "@/pages/Cart.vue";
+import Edit from "@/pages/Edit.vue";
 import Login from "@/pages/Login.vue";
 import Admin from "@/pages/Admin.vue";
 import Product from "@/pages/Product.vue";
@@ -34,6 +32,7 @@ const routes = [
     { path: "/cart", component: Cart },
     { path: "/login", component: Login },
     { path: "/admin", component: Admin },
+    { path: "/edit/:id", component: Edit},
     { path: "/profile", component: Profile },
     { path: "/products", component: Products },
     { path: "/products/:id", component: Product },

@@ -25,7 +25,7 @@
         number: "",
         expiration: "",
         enable: Store.logged() && Store.cart.length > 0,
-        address: Store.logged() ? Data.users.find(user => user.id === Store.user).address : "",
+        address: Store.logged() ? Store.user.address : "",
     });
 
     checkout.validate = function() {
@@ -54,10 +54,16 @@
 
         Data.purchases.push({
             id: Data.purchases.length.toString(), // Sequential ID
-            user: Store.user,
-            total: total.value,
             date: new Date().toISOString().slice(0, 10), // Current Date in YYYY-MM-DD
-            products: Store.cart.map(item => ({ id: item.product.id, quantity: item.quantity, paid: item.product.price * item.quantity, name: item.product.name, })),
+            user: Store.user.id,
+            total: total.value,
+
+            products: Store.cart.map(item => ({
+                id: item.product.id, quantity: item.quantity,
+                paid: item.product.price * item.quantity,
+                image: item.product.image,
+                name: item.product.name,
+            })),
         });
 
         Store.cart = [];
@@ -70,8 +76,8 @@
     }
 
     function minus(removed) {
-        if (removed.quantity == 1) Store.cart = Store.cart.filter(item => item.product.id !== removed.product.id); // Remove Item From Cart
-        else                       removed.quantity--;
+        if (removed.quantity === 1) Store.remove(removed);
+        else                        removed.quantity--;
     }
 </script>
 
@@ -85,16 +91,16 @@
                 <button :class="{ 'selected': step === 2 }" :disabled="step < 2" @click="step = 2"> Confirmation </button>
             </div>
 
-            <div class="container" v-if="step === 0">
+            <div class="center" v-if="step === 0">
                 <div id="listing" v-for="item in Store.cart" :key="item.product.id">
-                    <img :src="require(`@/assets/products/${item.product.id}.jpg`)">
+                    <img :src="require('@/assets/products/' + item.product.image)">
 
                     <div id="info">
                         <span> {{ item.product.name }} </span>
                         <div>
                             <span> {{ item.quantity }} </span>
-                            <button @click.stop.prevent="plus(item)"> <font-awesome-icon icon="plus" /> </button>
-                            <button @click.stop.prevent="minus(item)"> <font-awesome-icon icon="minus" /> </button>
+                            <button @click="plus(item)"> <font-awesome-icon icon="plus" /> </button>
+                            <button @click="minus(item)"> <font-awesome-icon icon="minus" /> </button>
                         </div>
                     </div>
 
@@ -108,13 +114,13 @@
                 <button :class="{ 'action': true, 'disabled': !checkout.enable, 'large': true }" :disabled="!checkout.enable" @click.stop.prevent="step = 1"> Checkout </button>
             </div>
 
-            <div class="container" v-else-if="step === 1">
-                <form class="inputs">
+            <div class="center" v-else-if="step === 1">
+                <form class="center inputs">
                     <h1> Delivery Address </h1>
                     <input type="text" placeholder="Address *" v-model="checkout.address" >
                 </form>
 
-                <form class="inputs">
+                <form class="center inputs">
                     <h1> Card Information </h1>
                     <input type="text" placeholder="Name *" v-model="checkout.name">
                     <input type="text" placeholder="Number *" v-model="checkout.number" v-maska="'#### #### #### ####'">
@@ -123,17 +129,17 @@
                 </form>
 
                 <small class="error"> {{ checkout.error }} </small>
-                <button class="action large" @click.stop.prevent="checkout.validate()"> Validade </button>
+                <button class="action large" @click="checkout.validate()"> Validade </button>
             </div>
 
-            <div class="container" v-else-if="step === 2">
+            <div class="center" v-else-if="step === 2">
                 <ul type="none">
                     <li> <strong> Delivery Address: </strong> {{ checkout.address }} </li>
                     <li> <strong> Credit Card: </strong> #### #### #### {{ checkout.number.slice(-4) }} </li>
                     <li> <strong> Final Price: </strong> {{ Store.price(total) }} </li>
                 </ul>
 
-                <button class="action large" @click.stop.prevent="confirm()"> Confirm </button>
+                <button class="action large" @click="confirm()"> Confirm </button>
             </div>
         </section>
     </main>

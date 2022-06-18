@@ -32,7 +32,7 @@
         if (user === undefined)              return this.error = "Sorry, the user informed was not found.";
         if (user.password !== this.password) return this.error = "Sorry, the password informed is incorrect.";
 
-        Store.user = user.id;
+        Store.user = user;
         router.push('/');
     };
 
@@ -64,10 +64,10 @@
             phone:    this.phone,
             email:    this.email,
             password: this.password,
-            isAdmin:  false,
+            admin:    false,
         };
         
-        Store.user = user.id;
+        Store.user = user;
         Data.users.push(user);
         router.push('/');
     };
@@ -82,7 +82,7 @@
                 <button :class="{ 'selected': show === 'register' }" @click="show = 'register'"> Register </button>
             </div>
 
-            <form class="inputs" v-if="show === 'login'">
+            <form class="center inputs" v-if="show === 'login'">
                 <input type="email" placeholder="Email *" v-model="login.email">
                 <input type="password" placeholder="Password *" v-model="login.password">
 
@@ -90,7 +90,7 @@
                 <button class="action large" @click.stop.prevent="login.validate()"> Log In </button>
             </form>
 
-            <form class="inputs" v-else>
+            <form class="center inputs" v-else>
                 <input type="text" placeholder="Name *" v-model="register.name">
                 <input type="text" placeholder="Address" v-model="register.address">
                 <input type="tel" placeholder="Phone" v-model="register.phone" v-maska="'(##) #####-####'">

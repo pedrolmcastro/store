@@ -17,8 +17,9 @@
         </router-link>
 
         <div id="right" class="side">
+            <router-link class="button" to="/admin" v-if="Store.user?.admin"> <font-awesome-icon icon="gears" /> </router-link>
             <router-link class="button" to="/cart"> <font-awesome-icon icon="cart-shopping" /> </router-link>
-            <router-link class="button" :to="Store.logged() ? '/profile' : '/login'"> <font-awesome-icon icon="circle-user" /> </router-link> <!-- TODO: Admin route -->
+            <router-link class="button" :to="Store.logged() ? '/profile' : '/login'"> <font-awesome-icon icon="circle-user" /> </router-link>
         </div>
     </nav>
 </template>

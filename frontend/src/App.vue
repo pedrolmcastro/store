@@ -23,6 +23,12 @@
         --white: rgb(255, 255, 255);
         --shadow: rgba(0, 0, 0, 0.2);
         --background: rgb(243, 243, 243);
+
+        /* Toggle */
+        --toggle-height: 1rem;
+        --toggle-width: 2.5rem;
+        --toggle-bg-on: var(--red);
+        --toggle-border-on: var(--red);
     }
 
 
@@ -62,7 +68,7 @@
 
     /* Container */
 
-    .container {
+    .center {
         display: flex;
         align-items: center;
         flex-direction: column;
@@ -101,12 +107,6 @@
 
     /* Inputs */
 
-    .inputs {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-    }
-
     .inputs input {
         all: unset;
         width: 70%;
@@ -116,7 +116,16 @@
         border: 1px solid var(--grey);
     }
 
-    .inputs input::placeholder {
+    .inputs textarea {
+        all: unset;
+        margin: 5px;
+        padding: 10px;
+        font-size: 1rem;
+        line-height: 1.2rem;
+        border: 1px solid var(--grey);
+    }
+
+    .inputs input::placeholder, .inputs textarea::placeholder {
         text-transform: uppercase;
     }
 

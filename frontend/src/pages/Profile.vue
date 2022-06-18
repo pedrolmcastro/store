@@ -11,8 +11,7 @@
     const router = useRouter();
 
 
-    const profile = Data.users.find(user => user.id === Store.user);
-    const purchases = computed(() => Data.purchases.filter(purchase => purchase.user === Store.user));
+    const purchases = computed(() => Data.purchases.filter(purchase => purchase.user === Store.user.id));
 
 
     function logout() {
@@ -24,12 +23,12 @@
 <template>
     <main class="window">
         <section id="profile" class="shadow">
-            <h1> {{ profile.name }} #{{ profile.id }} </h1>
+            <h1> {{ Store.user.name }} {{ Store.id(Store.user) }} </h1>
 
             <p>
-                {{ profile.address }} <br>
-                {{ profile.email }} <br>
-                {{ profile.phone }}
+                {{ Store.user.address }} <br>
+                {{ Store.user.email }} <br>
+                {{ Store.user.phone }}
             </p>
 
             <button class="action large" @click="logout()"> Log Out </button>
@@ -50,7 +49,7 @@
                     <template #content>
                         <div id="content" v-for="product in purchase.products" :key="product.id">
                             <div id="left">
-                                <img :src="require(`@/assets/products/${product.id}.jpg`)">
+                                <img :src="require('@/assets/products/' + product.image)">
                                 <span> {{ product.quantity }}x {{ product.name}} </span>
                             </div>
 
