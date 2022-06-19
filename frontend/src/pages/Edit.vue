@@ -17,13 +17,13 @@
     }
     
     const id = useRoute().params.id;
-    const product = reactive(id === "-1" ? Data.products[Data.products.push(empty) - 1] : Data.products.find(product => product.id === id));
+    const product = reactive(id === "new" ? Data.products[Data.products.push(empty) - 1] : Data.products.find(product => product.id === id));
 </script>
 
 
 <template>
     <main class="window">
-        <section class="shadow">
+        <section class="large shadow">
             <div id="image"> <img :src="require('@/assets/products/' + product.image)"> </div>
 
             <form class="inputs">
@@ -31,7 +31,7 @@
                 <textarea rows="2" id="summary" type="text" placeholder="Summary" v-model="product.summary" />
                 <textarea rows="5" id="description" type="text" placeholder="description" v-model="product.description" />
 
-                <div id="bottom">    
+                <div id="bottom">
                     <label for="quantity"> Quantity: </label>
                     <input id="quantity" type="number" min="0" v-model="product.quantity" />
 
@@ -39,9 +39,9 @@
                     <input id="price" type="number" min="0" step="100" v-model="product.price" />
 
                     <label for="category"> Category: </label>
-                    <select id="category" v-model="product.category">
-                        <option disabled selected value=""> Category </option>
-                        
+                    <select id="category" class="selector" v-model="product.category">
+                        <option disabled selected value=""> Select </option>
+
                         <!-- Hardware -->
                         <option value="cooler"> Cooler </option>
                         <option value="processor"> Processor </option>
@@ -77,13 +77,11 @@
     }
 
     section {
-        width: 65%;
         display: flex;
-        padding: 2rem 3rem;
-        margin: 5rem 0 1rem 0;
-        background-color: var(--white);
     }
 
+
+    /* Image */
 
     #image {
         width: 30%;
@@ -97,47 +95,31 @@
     }
 
 
+    /* Form */
+
     form {
         width: 70%;
     }
 
-    #name {
-        width: 100%;
+    label {
+        font-weight: 500;
     }
 
-    #summary {
-        width: 100%;
-    }
-
-    #description {
+    #name, #summary, #description {
         width: 100%;
     }
 
     #quantity {
-        border: 0;
         width: 40px;
+        border: none;
     }
 
     #price {
-        border: 0;
         width: 65px;
-    }
-
-    select {
         border: none;
-        font-size: 1rem;
-        background-color: transparent;
-    }
-
-    select:focus {
-        outline: none;
     }
 
     #bottom {
         padding: 0 5px;
-    }
-
-    label {
-        font-weight: 500;
     }
 </style>

@@ -9,11 +9,11 @@
 
 <template>
     <div id="card" class="shadow">
-        <router-link :to="`/products/${props.product.id}`">
-            <div id="image"> <img :src="require('@/assets/products/' + props.product.image)"> </div>
+        <router-link id="image" :to="`/products/${props.product.id}`">
+            <img :src="require('@/assets/products/' + props.product.image)">
         </router-link>
 
-        <div id="info">
+        <div id="information">
             <h1> {{ props.product.name }} </h1>
 
             <div id="bottom">
@@ -41,6 +41,8 @@
     }
 
 
+    /* Image */
+
     #image {
         width: 100%;
         height: 67%;
@@ -48,24 +50,25 @@
 
     #image img {
         width: 100%;
-        height: 100%;
+        height: 67%;
         object-fit: contain;
     }
 
 
-    #info {
+    /* Information */
+
+    #information {
         height: 33%;
         display: flex;
-        padding: 0.75rem;
+        padding: 0.5rem;
         flex-direction: column;
         justify-content: space-between;
     }
 
-    #info h1 {
+    #information h1 {
         font-weight: 700;
         font-size: 1.2rem;
     }
-
 
     #bottom {
         display: flex;

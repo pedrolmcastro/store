@@ -2,39 +2,39 @@
     import { computed } from "vue";
     import { useRouter } from "vue-router";
 
-    import '@dafcoe/vue-collapsible-panel/dist/vue-collapsible-panel.css';
+    import "@dafcoe/vue-collapsible-panel/dist/vue-collapsible-panel.css";
     import { VueCollapsiblePanelGroup, VueCollapsiblePanel } from "@dafcoe/vue-collapsible-panel";
 
     import Store from "@/Store.vue";
     import Data from "@/assets/datastore";
 
+
     const router = useRouter();
-
-
-    const purchases = computed(() => Data.purchases.filter(purchase => purchase.user === Store.user.id));
+    const purchases = computed(() => Data.purchases.filter(purchase => purchase.user === Store.user?.id));
 
 
     function logout() {
-        Store.user = undefined;
+        Store.logout();
         router.push('/');
     }
 </script>
 
+
 <template>
     <main class="window">
-        <section id="profile" class="shadow">
-            <h1> {{ Store.user.name }} {{ Store.id(Store.user) }} </h1>
+        <section id="profile" class="small shadow">
+            <h1> {{ Store.user?.name }} {{ Store.id(Store.user) }} </h1>
 
             <p>
-                {{ Store.user.address }} <br>
-                {{ Store.user.email }} <br>
-                {{ Store.user.phone }}
+                {{ Store.user?.address }} <br>
+                {{ Store.user?.email }} <br>
+                {{ Store.user?.phone }}
             </p>
 
-            <button class="action large" @click="logout()"> Log Out </button>
+            <button class="action big" @click="logout()"> Log Out </button>
         </section>
 
-        <section id="purchases" class="shadow">
+        <section id="purchases" class="small shadow">
             <h1> Purchases </h1>
 
             <vue-collapsible-panel-group v-for="purchase in purchases" :key="purchase.id" base-color="#ffffff">
@@ -42,7 +42,7 @@
                     <template #title>
                         <div id="title">
                             <span> {{ Store.date(purchase.date) }} </span>
-                            <span> {{ Store.price(purchase.total) }} </span>
+                            <strong> {{ Store.price(purchase.total) }} </strong>
                         </div>
                     </template>
 
@@ -71,11 +71,9 @@
         flex-direction: column;
     }
 
-    section {
-        width: 30vw;
+    .small {
+        min-height: 0;
         padding: 2rem 3rem;
-        box-sizing: border-box;
-        background-color: var(--white);
     }
 
 
@@ -108,11 +106,13 @@
         text-transform: uppercase;
     }
 
+
+    /* Panels */
+
     #panel {
         padding: 0;
         width: 100%;
     }
-
 
     #title {
         width: 100%;
@@ -120,12 +120,10 @@
         justify-content: space-between;
     }
 
-    #title span:nth-of-type(2) {
-        font-weight: 700;
+    #title strong {
         color: var(--red);
         padding-right: 5px;
     }
-
 
     #content {
         width: 100%;
@@ -138,7 +136,6 @@
         height: 40px;
         object-fit: contain;
     }
-
 
     #left {
         display: flex;

@@ -22,24 +22,20 @@
     }
 
 
-    input {
-        height: 100%;
-        padding: 0 5px;
-        border: 0px solid transparent;
-        background-color: var(--white);
-    }
-
-    input:focus {
-        outline:none;
-    }
-
-
     button {
         height: 80%;
+        border: none;
         margin: 10% 0;
         cursor: pointer;
         color: var(--grey);
-        border: 0px solid transparent;
+        background-color: var(--white);
+    }
+
+    input {
+        height: 100%;
+        border: none;
+        outline: none;
+        padding: 0 5px;
         background-color: var(--white);
     }
 </style>

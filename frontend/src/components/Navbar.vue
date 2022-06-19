@@ -8,7 +8,7 @@
 
 <template>
     <nav>
-        <div id="left" class="side">
+        <div id="left">
             <Slide width="255" :closeOnNavigation="true">
                 <h1> Hardware </h1>
                 <router-link class="category" to="/products/?category=cooler"> Cooler </router-link>
@@ -31,12 +31,12 @@
             <Search id="search" />
         </div>
 
-        <router-link id="title" to="/">
+        <router-link id="center" to="/">
             <img :src="require('@/assets/logo.svg')">
             <h1> Gaming Gem </h1>
         </router-link>
 
-        <div id="right" class="side">
+        <div id="right">
             <router-link class="button" to="/admin" v-if="Store.user?.admin"> <font-awesome-icon icon="gears" /> </router-link>
             <router-link class="button" to="/cart"> <font-awesome-icon icon="cart-shopping" /> </router-link>
             <router-link class="button" :to="Store.logged() ? '/profile' : '/login'"> <font-awesome-icon icon="circle-user" /> </router-link>
@@ -55,8 +55,48 @@
         background-color: var(--black);
     }
 
+
+    /* Left */
+
+    #left {
+        width: 33%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    #search {
+        height: 50%;
+        width: max-content;
+    }
+
+
+    /* Center */
+
+    #center {
+        display: flex;
+        font-size: 10px;
+        font-weight: 500;
+        color: var(--red);
+        text-decoration: none;
+        text-transform: uppercase;
+    }
+
+    #center img {
+        width: 25px;
+        margin-right: 10px;
+    }
+
+
+    /* Right */
+
+    #right {
+        width: 33%;
+        text-align: end;
+    }
+
     .button {
-        border: 0;
+        border: none;
         margin: 0 10px;
         font-size: 25px;
         color: var(--white);
@@ -66,42 +106,6 @@
     .button:hover {
         cursor: pointer;
         filter: brightness(70%);
-    }
-
-
-    .side {
-        width: 33%;
-    }
-
-    #left {
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: left;
-    }
-
-    #right {
-        text-align: end;
-    }
-
-
-    #title {
-        display: flex;
-        font-size: 10px;
-        font-weight: 500;
-        color: var(--red);
-        text-decoration: none;
-        text-transform: uppercase;
-    }
-
-    #title img {
-        width: 25px;
-        margin-right: 10px;
-    }
-
-    #search {
-        height: 50%;
-        width: max-content;
     }
 </style>
 
@@ -132,7 +136,7 @@
 
 
     .bm-menu {
-        padding-top: 50px;
+        padding-top: 35px;
         background-color: var(--black);
     }
 

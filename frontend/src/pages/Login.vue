@@ -9,7 +9,7 @@
 
 
     const regex = {
-        phone: /^\([0-9]{2}\) [0-9]{5}-[0-9]{4}$/,
+        phone: /^\(\d{2}\) \d{5}-\d{4}$/,
         email: /^.+@.+\..+$/,
     }
 
@@ -32,7 +32,7 @@
         if (user === undefined)              return this.error = "Sorry, the user informed was not found.";
         if (user.password !== this.password) return this.error = "Sorry, the password informed is incorrect.";
 
-        Store.user = user;
+        Store.login(user);
         router.push('/');
     };
 
@@ -67,8 +67,8 @@
             admin:    false,
         };
         
-        Store.user = user;
         Data.users.push(user);
+        Store.login(user);
         router.push('/');
     };
 </script>
@@ -76,7 +76,7 @@
 
 <template>
     <main class="window">
-        <section class="shadow">
+        <section class="small shadow">
             <div class="options">
                 <button :class="{ 'selected': show === 'login' }" @click="show = 'login'"> Log In </button>
                 <button :class="{ 'selected': show === 'register' }" @click="show = 'register'"> Register </button>
@@ -87,7 +87,7 @@
                 <input type="password" placeholder="Password *" v-model="login.password">
 
                 <small class="error"> {{ login.error }} </small>
-                <button class="action large" @click.stop.prevent="login.validate()"> Log In </button>
+                <button class="action big" @click.stop.prevent="login.validate()"> Log In </button>
             </form>
 
             <form class="center inputs" v-else>
@@ -99,7 +99,7 @@
                 <input type="password" placeholder="Confirm Password *" v-model="register.confirm">
 
                 <small class="error"> {{ register.error }} </small>
-                <button class="action large" @click.stop.prevent="register.validate()"> Register </button>
+                <button class="action big" @click.stop.prevent="register.validate()"> Register </button>
             </form>
         </section>
     </main>
@@ -114,13 +114,5 @@
 
     .options button {
         width: 50%;
-    }
-
-
-    section {
-        margin: 5vh;
-        width: 30vw;
-        min-height: 70vh;
-        background-color: var(--white);
     }
 </style>

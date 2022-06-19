@@ -27,7 +27,7 @@
     <main class="window">
         <section>
             <div id="top">
-                <select v-model="order">
+                <select class="selector" v-model="order">
                     <option selected> order by: a-z </option>
                     <option> order by: price </option>
                 </select>
@@ -60,16 +60,9 @@
         text-align: center;
     }
 
-    select {
+    .selector {
         margin: 20px;
-        border: none;
-        font-size: 1rem;
         color: var(--grey);
-        background-color: transparent;
-    }
-
-    select:focus {
-        outline: none;
     }
 
 
@@ -80,4 +73,4 @@
         justify-content: space-evenly;
         grid-template-columns: repeat(auto-fill, 350px);
     }
-</style> 
+</style>

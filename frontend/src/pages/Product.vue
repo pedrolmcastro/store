@@ -12,7 +12,7 @@
 
 <template>
     <main class="window">
-        <section id="product" class="shadow">
+        <section id="product" class="large shadow">
             <div id="image"> <img :src="require('@/assets/products/' + product.image)"> </div>
 
             <div id="text">
@@ -31,7 +31,7 @@
             </div>
         </section>
 
-        <section id="description" class="shadow">
+        <section id="description" class="large shadow">
             <h1> Description </h1>
             <p> {{ product.description }} </p>
         </section>
@@ -55,20 +55,12 @@
     }
 
 
-    section {
-        width: 65%;
-        padding: 2rem 3rem;
-        background-color: var(--white);
-    }
-
-
     /* Product */
 
     #product {
         display: flex;
         margin: 5rem 0 1rem 0;
     }
-
 
     #image {
         width: 30%;
@@ -81,7 +73,6 @@
         object-fit: contain;
     }
 
-
     #text {
         width: 70%;
         flex-grow: 1;
@@ -89,7 +80,6 @@
         flex-direction: column;
         justify-content: space-between;
     }
-
 
     #buy {
         display: flex;

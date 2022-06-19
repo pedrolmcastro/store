@@ -32,7 +32,7 @@
 
 <template>
     <main class="window">
-        <section class="shadow">
+        <section class="small shadow">
             <div class="options">
                 <button :class="{ 'selected': show === 'products' }" @click="show = 'products'"> Products </button>
                 <button :class="{ 'selected': show === 'users' }" @click="show = 'users'"> Users </button>
@@ -42,7 +42,7 @@
                 <div class="listing" v-for="product in data.products" :key="product.id">
                     <img :src="require('@/assets/products/' + product.image)">
 
-                    <div class="info">
+                    <div class="information">
                         <strong> {{ product.name }} </strong>
                         <span> {{ product.quantity }} in stock </span>
                     </div>
@@ -53,7 +53,7 @@
                     </div>
                 </div>
 
-                <router-link class="router" :to="'/edit/-1'"> <button class="action large"> Add Product </button>  </router-link>
+                <router-link class="router" :to="'/edit/new'"> <button class="action big"> Add Product </button>  </router-link>
             </div>
 
             <div class="center" v-else>
@@ -85,11 +85,8 @@
         width: 50%;
     }
 
-    section {
-        margin: 5vh;
-        width: 30vw;
-        min-height: 70vh;
-        background-color: var(--white);
+    .router {
+        all: unset;
     }
 
 
@@ -98,23 +95,11 @@
     .listing {
         width: 70%;
         height: 40px;
-        display: flex;
-        margin-bottom: 1rem;
-        justify-content: space-between;
     }
-    
+
     .listing img {
         width: 40px;
         height: 40px;
-        object-fit: contain;
-    }
-
-    .info {
-        display: flex;
-        margin-left: 1rem;
-        margin-right: auto;
-        flex-direction: column;
-        justify-content: space-between;
     }
 
     .edit {
@@ -129,11 +114,16 @@
         cursor: pointer;
         color: var(--red);
     }
+</style>
 
-    .router {
-        all: unset;
+
+<style>
+    /* Toggle */
+
+    :root {
+        --toggle-height: 1rem;
+        --toggle-width: 2.5rem;
+        --toggle-bg-on: var(--red);
+        --toggle-border-on: var(--red);
     }
-
-
-    /* Costumers */
 </style>

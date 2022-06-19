@@ -8,6 +8,16 @@
     });
 
 
+    // User
+
+    global.login = function(user) {
+        this.user = user;
+    }
+
+    global.logout = function() {
+        this.user = undefined;
+    }
+
     global.logged = function() {
         return this.user !== undefined;
     }
@@ -28,6 +38,14 @@
         }
     }
 
+    global.clear = function() {
+        this.cart = [];
+    }
+
+    global.empty = function() {
+        return this.cart.length === 0;
+    }
+
 
     // Formating
 
@@ -45,7 +63,7 @@
     }
 
     global.id = function(user) {
-        return '#' + user.id.padStart(4, '0');
+        return '#' + user?.id.padStart(4, '0');
     }
 
 

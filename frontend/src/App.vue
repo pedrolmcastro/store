@@ -23,12 +23,6 @@
         --white: rgb(255, 255, 255);
         --shadow: rgba(0, 0, 0, 0.2);
         --background: rgb(243, 243, 243);
-
-        /* Toggle */
-        --toggle-height: 1rem;
-        --toggle-width: 2.5rem;
-        --toggle-bg-on: var(--red);
-        --toggle-border-on: var(--red);
     }
 
 
@@ -66,7 +60,28 @@
     }
 
 
-    /* Container */
+    /* Containers */
+    
+    .small {
+        margin: 5vh;
+        width: 30vw;
+        min-height: 70vh;
+        background-color: var(--white);
+    }
+
+    .medium {
+        margin: 5vh;
+        width: 40vw;
+        min-height: 70vh;
+        background-color: var(--white);
+    }
+
+    .large {
+        width: 65vw;
+        margin: 5rem;
+        padding: 2rem 3rem;
+        background-color: var(--white);
+    }
 
     .center {
         display: flex;
@@ -135,6 +150,27 @@
     }
 
 
+    /* Listing */
+
+    .listing {
+        display: flex;
+        margin-bottom: 1rem;
+        justify-content: space-between;
+    }
+
+    .listing img {
+        object-fit: contain;
+    }
+
+    .listing .information {
+        display: flex;
+        margin-left: 1rem;
+        margin-right: auto;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+
     /* Button */
 
     .action {
@@ -158,10 +194,20 @@
         background-color: var(--grey);
     }
 
-    .large {
+    .big {
         margin: 10%;
         padding: 1em;
         width: 120px;
         min-width: 30%;
+    }
+
+
+    /* Selector */
+
+    .selector {
+        border: none;
+        outline: none;
+        font-size: 1rem;
+        background-color: transparent;
     }
 </style>

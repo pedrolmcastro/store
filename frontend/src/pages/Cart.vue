@@ -4,17 +4,19 @@
 
     import Store from "@/Store.vue";
     import Data from "@/assets/datastore";
+import { functionTypeAnnotation } from "@babel/types";
 
     const router = useRouter();
 
 
     const regex = {
-        cvv: /\d\d\d/,
-        expiration: /\d\d\/\d\d/,
-        number: /\d\d\d\d \d\d\d\d \d\d\d\d \d\d\d\d/,
+        cvv: /\d{3}/,
+        expiration: /\d{2}\/\d{2}/,
+        number: /\d{4} \d{4} \d{4} \d{4}/,
     }
 
     let step = ref(0);
+    let enable = computed(() => Store.logged() && !Store.empty());
     let total = computed(() => Store.cart.reduce((accumulator, item) => accumulator + item.quantity * item.product.price, 0));
 
 
@@ -24,7 +26,6 @@
         error: "",
         number: "",
         expiration: "",
-        enable: Store.logged() && Store.cart.length > 0,
         address: Store.logged() ? Store.user.address : "",
     });
 
@@ -36,14 +37,14 @@
         const year = parseInt("20" + this.expiration.slice(3, 5));
         const month = parseInt(this.expiration.slice(0, 2));
 
-        if (this.cvv === "")                         return this.error = "Please, inform a CVV.";
         if (this.name === "")                        return this.error = "Please, inform a name.";
         if (this.number === "")                      return this.error = "Please, inform a number.";
+        if (this.cvv === "")                         return this.error = "Please, inform a CVV.";
         if (this.expiration === "")                  return this.error = "Please, inform a expiration date.";
-        if (!regex.cvv.test(this.cvv))               return this.error = 'Sorry, invalid CVV, expected something like "123"';
-        if (!regex.number.test(this.number))         return this.error = 'Sorry, invalid number, expected something like "1234 1234 1234 1234"';
-        if (!regex.expiration.test(this.expiration)) return this.error = 'Sorry, invalid expiration date, expected something like "MM/YY"';
-        if (new Date(year, month) < new Date())      return this.error = "Sorry, expired credit card";
+        if (!regex.number.test(this.number))         return this.error = 'Sorry, invalid number, expected something like "1234 1234 1234 1234".';
+        if (!regex.cvv.test(this.cvv))               return this.error = 'Sorry, invalid CVV, expected something like "123".';
+        if (!regex.expiration.test(this.expiration)) return this.error = 'Sorry, invalid expiration date, expected something like "MM/YY".';
+        if (new Date(year, month) < new Date())      return this.error = "Sorry, expired credit card.";
 
         step.value = 2;
     }
@@ -54,9 +55,9 @@
 
         Data.purchases.push({
             id: Data.purchases.length.toString(), // Sequential ID
-            date: new Date().toISOString().slice(0, 10), // Current Date in YYYY-MM-DD
             user: Store.user.id,
             total: total.value,
+            date: new Date().toISOString().slice(0, 10), // Current Date in YYYY-MM-DD
 
             products: Store.cart.map(item => ({
                 id: item.product.id, quantity: item.quantity,
@@ -66,7 +67,7 @@
             })),
         });
 
-        Store.cart = [];
+        Store.clear();
         router.push('/');
     }
 
@@ -84,7 +85,7 @@
 
 <template>
     <main class="window">
-        <section class="shadow">
+        <section class="medium shadow">
             <div class="options">
                 <button :class="{ 'selected': step === 0 }" @click="step = 0"> Cart </button>
                 <button :class="{ 'selected': step === 1 }" :disabled="step < 1" @click="step = 1"> Checkout </button>
@@ -92,10 +93,10 @@
             </div>
 
             <div class="center" v-if="step === 0">
-                <div id="listing" v-for="item in Store.cart" :key="item.product.id">
+                <div class="listing" v-for="item in Store.cart" :key="item.product.id">
                     <img :src="require('@/assets/products/' + item.product.image)">
 
-                    <div id="info">
+                    <div class="information">
                         <span> {{ item.product.name }} </span>
                         <div>
                             <span> {{ item.quantity }} </span>
@@ -107,20 +108,18 @@
                     <span id="price"> {{ Store.price(item.product.price * item.quantity) }} </span>
                 </div>
 
-                <h1 v-if="Store.cart.length === 0"> Empty cart </h1>
+                <h1 v-if="Store.empty()"> Empty cart </h1>
                 <div id="total" v-else> <strong> TOTAL: </strong> <span> {{ Store.price(total) }} </span> </div>
 
-                <p v-if="!Store.logged()"> Please, <router-link id="link" to="/login"> log in</router-link> to place your order. </p>
-                <button :class="{ 'action': true, 'disabled': !checkout.enable, 'large': true }" :disabled="!checkout.enable" @click.stop.prevent="step = 1"> Checkout </button>
+                <p v-if="!Store.logged()"> Please, <router-link id="router" to="/login"> log in</router-link> to place your order. </p>
+                <button :class="{ 'action': true, 'disabled': !enable, 'big': true }" :disabled="!enable" @click.stop.prevent="step = 1"> Checkout </button>
             </div>
 
             <div class="center" v-else-if="step === 1">
                 <form class="center inputs">
                     <h1> Delivery Address </h1>
-                    <input type="text" placeholder="Address *" v-model="checkout.address" >
-                </form>
+                    <input type="text" placeholder="Address *" v-model="checkout.address">
 
-                <form class="center inputs">
                     <h1> Card Information </h1>
                     <input type="text" placeholder="Name *" v-model="checkout.name">
                     <input type="text" placeholder="Number *" v-model="checkout.number" v-maska="'#### #### #### ####'">
@@ -129,7 +128,7 @@
                 </form>
 
                 <small class="error"> {{ checkout.error }} </small>
-                <button class="action large" @click="checkout.validate()"> Validade </button>
+                <button class="action big" @click="checkout.validate()"> Validade </button>
             </div>
 
             <div class="center" v-else-if="step === 2">
@@ -139,7 +138,7 @@
                     <li> <strong> Final Price: </strong> {{ Store.price(total) }} </li>
                 </ul>
 
-                <button class="action large" @click="confirm()"> Confirm </button>
+                <button class="action big" @click="confirm()"> Confirm </button>
             </div>
         </section>
     </main>
@@ -157,57 +156,38 @@
     }
 
 
-    section {
-        margin: 5vh;
-        width: 40vw;
-        min-height: 70vh;
-        background-color: var(--white);
-    }
-
-
     /* Cart */
 
-    #listing {
+    .listing {
         width: 90%;
         height: 80px;
-        display: flex;
-        margin-bottom: 1rem;
-        justify-content: space-between;
     }
 
-    #listing img {
+    .listing img {
         width: 80px;
         height: 80px;
-        object-fit: contain;
     }
 
 
-    #info {
-        display: flex;
-        margin-left: 1rem;
+    .listing .information {
         font-size: 1.3rem;
-        margin-right: auto;
-        flex-direction: column;
-        justify-content: space-between;
     }
 
-    #info button {
+    .information button {
         all: unset;
         cursor: pointer;
-        margin-left: 0.5rem;
+        margin-left: 0.3rem;
     }
 
-    #info span:first-of-type {
-        padding-top: 3px;
+    .information > span {
+        padding-top: 2px;
     }
-
 
     #price {
         font-weight: 600;
         font-size: 1.5rem;
         color: var(--red);
     }
-
 
     #total {
         width: 90%;
@@ -225,8 +205,7 @@
         color: var(--red);
     }
 
-
-    #link {
+    #router {
         color: var(--red);
     }
 
