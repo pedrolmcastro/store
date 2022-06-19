@@ -110,16 +110,43 @@
     }
 
     #quantity {
+        margin: 0;
+        padding: 0;
         width: 40px;
         border: none;
     }
 
     #price {
+        margin: 0;
+        padding: 0;
         width: 65px;
         border: none;
     }
 
     #bottom {
-        padding: 0 5px;
+        padding-left: 5px;
+    }
+
+
+    /* Media Queries */
+
+    @media (max-width: 728px) {
+        section {
+            flex-direction: column;
+        }
+
+        #image, form {
+            width: 100%;
+        }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+        #image {
+            width: 40%;
+        }
+
+        form {
+            width: 60%;
+        }
     }
 </style>

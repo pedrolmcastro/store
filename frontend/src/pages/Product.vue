@@ -101,4 +101,37 @@
     #description {
         margin: 1rem 0 5rem 0;
     }
+
+
+    /* Media Queries */
+
+    @media (max-width: 728px) {
+        #product {
+            flex-direction: column;
+        }
+        
+        #image, #text {
+            width: 100%;
+        }
+
+        .action {
+            font-size: 1rem;
+            padding: 0rem 2rem;
+        }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+        #image {
+            width: 40%;
+        }
+
+        #text {
+            width: 60%;
+        }
+        
+        .action {
+            font-size: 1rem;
+            padding: 0rem 2rem;
+        }
+    }
 </style>

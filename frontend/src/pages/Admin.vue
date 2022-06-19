@@ -58,13 +58,13 @@
 
             <div class="center" v-else>
                 <div class="listing" v-for="user in data.users" :key="user.id">
-                    <div class="info">
+                    <div class="information">
                         <strong> {{ user.name }} </strong>
                         <span> {{ Store.id(user) }} </span>
                     </div>
 
                     <div>
-                        <button id="test" class="edit" @click="users.delete(user)"> <font-awesome-icon icon="trash" /> </button>
+                        <button class="edit" @click="users.delete(user)"> <font-awesome-icon icon="trash" /> </button>
                         <Toggle v-model="user.admin"> Admin </Toggle>
                         <span :style="`color: ${user.admin ? 'var(--red)' : 'var(--grey)'};`"> Admin </span>
                     </div>
@@ -104,15 +104,26 @@
 
     .edit {
         all: unset;
-        width: 20px;
-        height: 20px;
-        padding: 5px;
+        padding: 10px;
         color: var(--grey);
     }
 
     .edit:hover {
         cursor: pointer;
         color: var(--red);
+    }
+
+
+    /* Media Queries */
+
+    @media (max-width: 728px) {
+        .listing {
+            width: 90%;
+        }
+        
+        .edit {
+            padding: 5px;
+        }
     }
 </style>
 

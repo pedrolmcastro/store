@@ -210,4 +210,38 @@
         font-size: 1rem;
         background-color: transparent;
     }
+
+
+    /* Media Queries */
+
+    @media (max-width: 768px) {
+        .small, .medium, .large {
+            margin: 2vw;
+            width: 90vw;
+        }
+
+        .options button {
+            font-size: 0.8rem;
+        }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+        .small {
+            width: 60vw;
+        }
+
+        .medium {
+            width: 70vw;
+        }
+    }
+
+    @media (min-width: 1025px) and (max-width: 1380px) {
+        .small {
+            width: 40vw;
+        }
+
+        .medium {
+            width: 45vw;
+        }
+    }
 </style>

@@ -107,6 +107,23 @@
         cursor: pointer;
         filter: brightness(70%);
     }
+
+
+    /* Media Queries */
+
+    @media (max-width: 728px) {
+        #center h1 {
+            display: none;
+        }
+
+        #center img {
+            margin-right: 0;
+        }
+
+        .button {
+            font-size: 17px;
+        }
+    }
 </style>
 
 
