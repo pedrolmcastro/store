@@ -4,7 +4,6 @@
 
     import Store from "@/Store.vue";
     import Data from "@/assets/datastore";
-import { functionTypeAnnotation } from "@babel/types";
 
     const router = useRouter();
 
@@ -44,6 +43,7 @@ import { functionTypeAnnotation } from "@babel/types";
         if (!regex.number.test(this.number))         return this.error = 'Sorry, invalid number, expected something like "1234 1234 1234 1234".';
         if (!regex.cvv.test(this.cvv))               return this.error = 'Sorry, invalid CVV, expected something like "123".';
         if (!regex.expiration.test(this.expiration)) return this.error = 'Sorry, invalid expiration date, expected something like "MM/YY".';
+        if (month < 1 || month > 12)                 return this.error = "Sorry, invalid month on expiration date, expected a number between 01 and 12.";
         if (new Date(year, month) < new Date())      return this.error = "Sorry, expired credit card.";
 
         step.value = 2;
