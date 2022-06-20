@@ -58,7 +58,7 @@
         if (Data.users.find(user => user.email === this.email) !== undefined) return this.error = "Sorry, the informed email has already been used.";
 
         const user = {
-            id:       Data.users.length.toString(), // Sequential ID
+            id:       (Data.ids.users++).toString(),
             name:     this.name,
             address:  this.address,
             phone:    this.phone,

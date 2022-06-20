@@ -60,7 +60,7 @@ export default {
             password: "admin",
             email: "admin@email.com",
             phone: "(00) 00000-0000",
-            address: "Rua dos Admins, 0 - Adminlandia - AL",
+            address: "Admins Street, 0 - Adminland - AL",
         },
         {
             id: '1',
@@ -69,7 +69,7 @@ export default {
             password: "user",
             email: "user@email.com",
             phone: "(11) 11111-1111",
-            address: "Rua dos Users, 1 - Userlandia - UL",
+            address: "Users Street, 1 - Userland - UL",
         },
     ],
 
@@ -97,4 +97,10 @@ export default {
             ],
         },
     ],
+
+    ids: {
+        purchases: 1,
+        products: 5,
+        users: 2,
+    }
 }

@@ -6,7 +6,7 @@
 
 
     const empty = {
-        id: Data.products.length.toString(), // Sequential ID
+        id: (Data.ids.products++).toString(),
         name: "",
         price: 0,
         quantity: 0,

@@ -54,7 +54,7 @@ import { functionTypeAnnotation } from "@babel/types";
         Store.cart.forEach(item => item.product.quantity -= item.quantity);
 
         Data.purchases.push({
-            id: Data.purchases.length.toString(), // Sequential ID
+            id: (Data.ids.purchases++).toString(),
             user: Store.user.id,
             total: total.value,
             date: new Date().toISOString().slice(0, 10), // Current Date in YYYY-MM-DD

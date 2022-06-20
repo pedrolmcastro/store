@@ -27,13 +27,16 @@
 
     global.add = function(product) {
         if (this.cart.find(item => item.product.id === product.id) === undefined) {
-            alert(`Product "${product.name}" added to cart.`);
+            alert(`Product "${product.name}" added to the cart.`);
             this.cart.push({ product: product, quantity: 1 });
+        }
+        else {
+            alert(`Product "${product.name}" already added to the cart.`);
         }
     }
 
     global.remove = function(removed) {
-        if (confirm(`Product "${removed.product.name}" will be removed from cart.`)) {
+        if (confirm(`Product "${removed.product.name}" will be removed from the cart.`)) {
             this.cart = this.cart.filter(item => item.product.id !== removed.product.id);
         }
     }
