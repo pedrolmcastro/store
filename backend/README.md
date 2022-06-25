@@ -2,7 +2,6 @@
 
 ```
 npm i
-
 ```
 
 ## Run test mongo instance and populate database
@@ -19,6 +18,5 @@ npm run populate
 ## Run server
 
 ```
-
 npm start
 ```
