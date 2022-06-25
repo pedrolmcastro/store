@@ -1,19 +1,27 @@
 <script setup>
     import { useRoute } from "vue-router";
 
-    import Data from "@/assets/datastore";
     import Store from "@/Store.vue";
+import { onBeforeMount, ref } from "vue";
+import axios from "axios";
 
 
     const id = useRoute().params.id;
-    const product = Data.products.find(product => product.id === id);
+
+    const product = ref({
+        image: 'default.webp'
+    })
+    
+    onBeforeMount(async () => {
+        product.value = (await axios.get(`/products/${id}`)).data
+    })
 </script>
 
 
 <template>
     <main class="window">
         <section id="product" class="large shadow">
-            <div id="image"> <img :src="require('@/assets/products/' + product.image)"> </div>
+            <div id="image"> <img :src="require('@/assets/products/' + product.image || 'default.webp')"> </div>
 
             <div id="text">
                 <div>

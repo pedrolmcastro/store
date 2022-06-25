@@ -4,6 +4,7 @@
 
     import Store from "@/Store.vue";
     import Data from "@/assets/datastore";
+    import axios from "axios";
 
     const router = useRouter();
 
@@ -60,13 +61,14 @@
             date: new Date().toISOString().slice(0, 10), // Current Date in YYYY-MM-DD
 
             products: Store.cart.map(item => ({
-                id: item.product.id, quantity: item.quantity,
+                id: item.product.id, 
+                quantity: item.quantity,
                 paid: item.product.price * item.quantity,
                 image: item.product.image,
                 name: item.product.name,
             })),
         });
-
+        
         Store.clear();
         router.push('/');
     }

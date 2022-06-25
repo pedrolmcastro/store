@@ -1,29 +1,39 @@
 <script setup>
-    import { reactive, ref } from "vue";
+    import { reactive, ref, onBeforeMount } from "vue";
 
     import Toggle from "@vueform/toggle";
     import "@vueform/toggle/themes/default.css";
 
     import Store from "@/Store.vue";
     import Data from "@/assets/datastore";
+    import axios from "axios";
 
 
-    let data = reactive(Data); // Make the Data Reactive
+    const content = ref({
+        users: Data.users,
+        products: []
+    })
+
+    onBeforeMount(async () => {
+        content.value.products = (await axios.get("/products")).data
+    })
+
     let show = ref("products");
 
 
     const products = {
-        delete(deleted) {
+        async delete(deleted) {
             if (confirm(`Product "${deleted.name}" will be deleted.`)) {
-                data.products = data.products.filter(product => product.id !== deleted.id);
+                await axios.delete(`/products/${deleted.id}`)
+                content.value.products = (await axios.get("/products")).data
             }
         },
     }
 
     const users = {
-        delete(deleted) {
+        async delete(deleted) {
             if (confirm(`User "${deleted.name}" will be deleted.`)) {
-                data.users = data.users.filter(user => user.id !== deleted.id);
+                content.value.users = content.value.users.filter(user => user.id !== deleted.id);
             }
         },
     }
@@ -39,8 +49,8 @@
             </div>
 
             <div class="center" v-if="show === 'products'">
-                <div class="listing" v-for="product in data.products" :key="product.id">
-                    <img :src="require('@/assets/products/' + product.image)">
+                <div class="listing" v-for="product in content.products" :key="product.id">
+                    <img :src="require('@/assets/products/' + (product.image ? product.image : 'default.webp') )">
 
                     <div class="information">
                         <strong> {{ product.name }} </strong>
@@ -57,7 +67,7 @@
             </div>
 
             <div class="center" v-else>
-                <div class="listing" v-for="user in data.users" :key="user.id">
+                <div class="listing" v-for="user in content.users" :key="user.id">
                     <div class="information">
                         <strong> {{ user.name }} </strong>
                         <span> {{ Store.id(user) }} </span>

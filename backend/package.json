@@ -4,7 +4,9 @@
     "description": "Backend for vue store",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node index.js",
+        "populate": "node scripts/populate.js"
     },
     "author": "",
     "license": "ISC",

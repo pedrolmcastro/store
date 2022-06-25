@@ -10,7 +10,7 @@
 <template>
     <div id="card" class="shadow">
         <router-link id="image" :to="`/products/${props.product.id}`">
-            <img :src="require('@/assets/products/' + props.product.image)">
+            <img :src="require('@/assets/products/' + (props.product.image || 'default.webp'))">
         </router-link>
 
         <div id="information">

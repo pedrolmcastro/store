@@ -1,25 +1,31 @@
 <script setup>
-    import { ref, computed } from "vue";
+    import { ref, watchEffect } from "vue";
     import { useRoute } from "vue-router";
-
-    import Data from "@/assets/datastore";
     import Card from "@/components/Card.vue";
-
+import axios from "axios";
 
     const route = useRoute();
     let order = ref("order by: a-z");
+    const products =  ref([]);
 
-    const products = computed(() => {
-        let filtered = Data.products.filter(product => product.quantity > 0);
+    watchEffect(async () => {
+        let params = {
+            search: route.query.search || "",
+            instock: true,
+            sort: order.value === "order by: a-z" ? "name" : "price"
+        }
 
-        if ("search" in route.query)        filtered = filtered.filter(product => product.name.toLowerCase().includes(route.query.search.toLowerCase()));
-        else if ("category" in route.query) filtered = filtered.filter(product => product.category === route.query.category);
+        if (route.query.category)
+            params.category = route.query.category
 
-        if (order.value.includes("a-z"))        filtered.sort((first, second) => first.name.localeCompare(second.name, undefined, { sensitivity: "base" }));
-        else if (order.value.includes("price")) filtered.sort((first, second) => first.price - second.price);
+        console.log(params)
+        let res = (await axios.get("/products", { params })).data
+        console.log(res)
+        products.value = res
+    })
 
-        return filtered;
-    });
+
+
 </script>
 
 

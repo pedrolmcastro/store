@@ -1,12 +1,20 @@
 <script setup>
-    import { computed } from "vue";
+    import { ref, onBeforeMount } from "vue";
 
-    import Data from "@/assets/datastore";
     import Card from "@/components/Card.vue";
     import Search from "@/components/Search.vue";
+    import axios from "axios";
 
 
-    const products = computed(() => Data.products.filter(item => item.quantity > 0).slice(0, 4));
+    const products = ref([])
+    onBeforeMount(async () => {
+        products.value = (await axios.get("/products", { 
+            params: {
+                max: 4,
+                instock: true
+            }
+        })).data
+    })
 </script>
 
 
