@@ -3,7 +3,7 @@
     import { useRoute, useRouter } from "vue-router";
     import axios from "axios"
 
-    const id = useRoute().params.id;
+    let id = useRoute().params.id;
     const product = ref({
         name: "",
         price: 0,
@@ -11,8 +11,10 @@
         summary: "",
         category: "",
         description: "",
-        image: "default.webp",
+        image: "",
     })
+
+    const imagefile = ref()
 
     onBeforeMount(async () => {
         if (id !== "new")
@@ -23,14 +25,23 @@
 
     const router = useRouter()
     const submitChanges = async () => {
-        if (id === "new")
-            await axios.post("/products", {
+        if (id === "new") {
+            id = (await axios.post("/products", {
                 ...product.value
-            })
-        else
+            })).data.id
+        }
+        else {
             await axios.patch(`/products/${id}`, {
                 ...product.value
             })
+        }
+        
+        if (imagefile.value.files.length === 1) {
+            let form = new FormData()
+            form.append("image", imagefile.value.files[0])
+
+            await axios.post(`/products/${id}/image`, form)
+        }
         
         router.push('/admin')
     }
@@ -40,7 +51,13 @@
 <template>
     <main class="window">
         <section class="large shadow">
-            <div id="image"> <img :src="require('@/assets/products/' + product.image)"> </div>
+            <div id="image"> 
+                <label for="image-input">
+                    <img :src="product.image ? `http://localhost:3001/images/${product.image}` : require('@/assets/products/default.webp')"> 
+                </label>
+
+                <input ref="imagefile" id="image-input" type="file" accept="image/png, image/jpeg" hidden/>
+            </div>
 
             <form class="inputs">
                 <input id="name" type="text" placeholder="Name" v-model="product.name" />
@@ -115,6 +132,7 @@
         width: 100%;
         height: 100%;
         object-fit: contain;
+        cursor: pointer;
     }
 
 

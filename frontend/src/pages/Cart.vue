@@ -3,7 +3,6 @@
     import { computed, reactive, ref } from "vue";
 
     import Store from "@/Store.vue";
-    import Data from "@/assets/datastore";
     import axios from "axios";
 
     const router = useRouter();
@@ -51,11 +50,8 @@
     }
 
 
-    function confirm() {
-        Store.cart.forEach(item => item.product.quantity -= item.quantity);
-
-        Data.purchases.push({
-            id: (Data.ids.purchases++).toString(),
+    async function confirm() {
+        const purchase = {
             user: Store.user.id,
             total: total.value,
             date: new Date().toISOString().slice(0, 10), // Current Date in YYYY-MM-DD
@@ -67,7 +63,9 @@
                 image: item.product.image,
                 name: item.product.name,
             })),
-        });
+        };
+
+        await axios.post('/purchases', purchase)
         
         Store.clear();
         router.push('/');
@@ -96,7 +94,7 @@
 
             <div class="center" v-if="step === 0">
                 <div class="listing" v-for="item in Store.cart" :key="item.product.id">
-                    <img :src="require('@/assets/products/' + item.product.image)">
+                    <img :src="item.product.image ? `http://localhost:3001/images/${item.product.image}` : require('@/assets/products/default.webp')">
 
                     <div class="information">
                         <span> {{ item.product.name }} </span>

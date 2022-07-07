@@ -1,16 +1,20 @@
 <script setup>
-    import { computed } from "vue";
+    import { computed, onBeforeMount, ref } from "vue";
     import { useRouter } from "vue-router";
+    import axios from "axios";
 
     import "@dafcoe/vue-collapsible-panel/dist/vue-collapsible-panel.css";
     import { VueCollapsiblePanelGroup, VueCollapsiblePanel } from "@dafcoe/vue-collapsible-panel";
 
     import Store from "@/Store.vue";
-    import Data from "@/assets/datastore";
 
 
     const router = useRouter();
-    const purchases = computed(() => Data.purchases.filter(purchase => purchase.user === Store.user?.id));
+
+    const purchases = ref([])
+    onBeforeMount(async () => {
+        purchases.value = (await axios.get('/purchases')).data
+    })
 
 
     function logout() {
@@ -23,7 +27,8 @@
 <template>
     <main class="window">
         <section id="profile" class="small shadow">
-            <h1> {{ Store.user?.name }} {{ Store.id(Store.user) }} </h1>
+            <h1> {{ Store.user?.name }} </h1>
+            <p>Id: {{ Store.id(Store.user) }} </p>
 
             <p>
                 {{ Store.user?.address }} <br>
@@ -49,7 +54,7 @@
                     <template #content>
                         <div id="content" v-for="product in purchase.products" :key="product.id">
                             <div id="left">
-                                <img :src="require('@/assets/products/' + product.image)">
+                                <img :src="product.image ? `http://localhost:3001/images/${product.image}` : require('@/assets/products/default.webp')">
                                 <span> {{ product.quantity }}x {{ product.name}} </span>
                             </div>
 

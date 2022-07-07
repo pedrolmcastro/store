@@ -3,7 +3,7 @@
     import { useRouter } from "vue-router";
 
     import Store from "@/Store.vue";
-    import Data from "@/assets/datastore";
+    import axios from "axios";
 
     const router = useRouter();
 
@@ -22,17 +22,16 @@
         password: "",
     });
 
-    login.validate = function() {
+    login.validate = async function() {
         if (this.email === "")             return this.error = "Please, inform an email.";
         if (this.password === "")          return this.error = "Please, inform a password.";
         if (!regex.email.test(this.email)) return this.error = 'Sorry, invalid email format, expected something like "user@email.com".';
 
-        const user = Data.users.find(user => user.email === this.email);
+        const data = (await axios.post("/auth/login", { email: this.email, password: this.password })).data
 
-        if (user === undefined)              return this.error = "Sorry, the user informed was not found.";
-        if (user.password !== this.password) return this.error = "Sorry, the password informed is incorrect.";
+        if (data.token === undefined)              return this.error = "Sorry, the user informed was not found.";
 
-        Store.login(user);
+        Store.login(data.token);
         router.push('/');
     };
 
@@ -47,7 +46,7 @@
         password: "",
     });
 
-    register.validate = function() {
+    register.validate = async function() {
         if (this.name === "")                                                 return this.error = "Please, inform a name.";
         if (this.email === "")                                                return this.error = "Please, inform an email.";
         if (this.password === "")                                             return this.error = "Please, inform a password.";
@@ -55,21 +54,30 @@
         if (this.phone !== "" && !regex.phone.test(this.phone))               return this.error = 'Sorry, invalid phone format, expected something like "(12) 12345-1234".';
         if (!regex.email.test(this.email))                                    return this.error = 'Sorry, invalid email format, expected something like "user@email.com".';
         if (this.password !== this.confirm)                                   return this.error = "Sorry, the password informed and its confirmation do not match.";
-        if (Data.users.find(user => user.email === this.email) !== undefined) return this.error = "Sorry, the informed email has already been used.";
 
-        const user = {
-            id:       (Data.ids.users++).toString(),
-            name:     this.name,
-            address:  this.address,
-            phone:    this.phone,
-            email:    this.email,
-            password: this.password,
-            admin:    false,
-        };
+        try {
+            const data = (await axios.post('/auth/register', {
+                name:     this.name,
+                address:  this.address,
+                phone:    this.phone,
+                email:    this.email,
+                password: this.password,
+                admin:    false,
+            })).data
+
+            if (!data.user)
+                return this.error = "Sorry, we weren't able to register your user.";
         
-        Data.users.push(user);
-        Store.login(user);
-        router.push('/');
+            login.email = this.email
+            login.password = this.password
+            login.validate()
+        } catch (err) {
+            console.log(err)
+            return this.error = "Sorry, there was an internal error while registering your user."
+        }
+
+
+
     };
 </script>
 

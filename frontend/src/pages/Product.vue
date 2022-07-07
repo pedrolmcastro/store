@@ -21,7 +21,7 @@ import axios from "axios";
 <template>
     <main class="window">
         <section id="product" class="large shadow">
-            <div id="image"> <img :src="require('@/assets/products/' + product.image || 'default.webp')"> </div>
+            <div id="image"> <img :src="product.image ? `http://localhost:3001/images/${product.image}` : require('@/assets/products/default.webp')"> </div>
 
             <div id="text">
                 <div>

@@ -46,7 +46,6 @@ const router = createRouter({
 
 // Axios setup
 
-
 axios.defaults.baseURL = 'http://localhost:3001'
 
 createApp(App)

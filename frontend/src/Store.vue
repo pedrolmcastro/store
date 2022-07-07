@@ -1,21 +1,41 @@
 <script>
-    import { reactive } from "vue";
+    import axios from "axios";
+import { reactive } from "vue";
 
 
     const global = reactive({
+        token: undefined,
         user: undefined,
         cart: [],
     });
 
 
     // User
+    global.login = async function(token) {
 
-    global.login = function(user) {
-        this.user = user;
+        console.log(token)
+        
+        this.token = token;
+        axios.defaults.headers.common = {'Authorization': `Bearer ${token}`}
+        
+        const response = (await axios.get('users/me'))
+
+        // checing if user is still valid
+        if (response.status === 200) {
+            localStorage.setItem("token", token);
+            this.user = response.data;
+        } else {
+            this.token = undefined;
+        }
+        console.log(localStorage.getItem("token"))
+
+        
     }
 
     global.logout = function() {
         this.user = undefined;
+        this.token = undefined;
+        localStorage.removeItem("token");
     }
 
     global.logged = function() {
@@ -24,7 +44,6 @@
 
 
     // Cart
-
     global.add = function(product) {
         if (this.cart.find(item => item.product.id === product.id) === undefined) {
             alert(`Product "${product.name}" added to the cart.`);
