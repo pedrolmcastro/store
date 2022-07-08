@@ -1,55 +1,50 @@
 
-const express = require('express')
-const User = require('../models/user')
+const bcrypt = require("bcrypt");
+const express = require("express");
+const jwt = require("jsonwebtoken");
+const User = require("../models/user");
+const { passport, secretkey } = require("../auth/authentication");
 
-const jwt = require("jsonwebtoken")
-const bcrypt = require('bcrypt')
+const router = express.Router();
 
-const { passport, secretKey } = require('../auth/authentication')
 
-const router = express.Router()
-
-router.post("/login", async (req, res, next) => { 
-    // Using passport to authenticate login route
-    passport.authenticate('local', { session: false }, (err, user, info) => { 
-        if (err) { 
-            return res.status(500).json({ err })
-        }
+// Authenticate Login
+router.post("/login", async (request, response, next) => { 
+    passport.authenticate("local", { session: false }, (error, user, information) => { 
+        if (error) return response.status(500).json({ error });
 
         if (!user) { 
-            const { message } = info
-            return res.status(401).json({ message })
+            const { message } = information;
+            return response.status(401).json({ message });
         }
-        
-        const { id } = user
-        const token = jwt.sign({ id }, secretKey, { expiresIn: '1h' })
 
-        res.status(200).send({ "token": token })
+        const { id } = user;
+        const token = jwt.sign({ id }, secretkey, { expiresIn: "1h" });
 
-    })(req, res, next)
-})
+        response.status(200).send({ token: token });
+    })(request, response, next)
+});
 
-router.post("/register", async (req, res) => { 
-    // Using passport to validate registration route
-    if (!req.body.password) {
-        return res.status(400).json({ error: "Invalid password" })
-    }
-    const hashedPassword = await bcrypt.hash(req.body.password, 10)
+// Create User
+router.post("/register", async (request, response) => { 
+    if (!request.body.password) return response.status(400).send({ error: "Invalid password." });
+
+    const hashed = await bcrypt.hash(request.body.password, 10);
 
     try {
         const user = new User({
-            ...req.body,
-            password: hashedPassword
-        })
+            ...request.body,
+            password: hashed,
+        });
         
-        await user.save()
+        await user.save();
 
-        res.status(200).send({ message: "User created!", user })
-    } catch (err) {
-        console.log(err)
-        return res.status(400).json({ error: "Error during user registration" })
+        response.status(200).send(user);
     }
-})
+    catch (error) {
+        return response.status(400).send({ error: "Error during user registration." });
+    }
+});
 
-module.exports = router     
 
+module.exports = router;

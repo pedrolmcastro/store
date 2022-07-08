@@ -1,77 +1,67 @@
-const User = require('../models/user')
-const express = require('express')
-const { default: mongoose } = require('mongoose')
+const express = require("express");
+const User = require("../models/user");
+const { default: mongoose } = require("mongoose");
+const { isauthenticated, isadmin } = require("../auth/authorization");
 
-const { isAuthenticated, isAdmin } = require('../auth/authorization')
 
-const NotFound = "User not found."
-const InvalidId = "Invalid ID Supplied."
+const router = express.Router();
+router.use(isauthenticated);
 
-const router = express.Router()
 
-router.use(isAuthenticated)
+const NOT_FOUND = "User not found."
+const INVALID_ID = "Invalid ID Supplied."
 
-// Get yourself (based on passport id middleware)
-router.get('/me', async (req, res) => {
-    if (!mongoose.isValidObjectId(req.user.id)) {
-        return res.status(400).send({error: InvalidId})
-    }
 
-    const user = await User.findById(req.user.id).exec()
-    if (!user)
-        return res.status(404).send({error: NotFound})
+// Get Yourself based on Passport ID Middleware
+router.get("/me", async (request, response) => {
+    if (!mongoose.isValidObjectId(request.user.id)) return response.status(400).send({ error: INVALID_ID });
+
+    const user = await User.findById(request.user.id).exec();
+    if (!user) return response.status(404).send({ error: NOT_FOUND });
+
+    response.status(200).send(user);
+});
+
+
+router.use(isadmin);
+
+
+// Get User by ID
+router.get("/:id", async (request, response) => {
+    if (!mongoose.isValidObjectId(request.params.id)) return response.status(400).send({ error: INVALID_ID });
+
+    const user = await User.findById(request.params.id).exec();
+    if (!user) return response.status(404).send({ error: NOT_FOUND });
     
-    res.status(200).send(user)
-})
+    response.status(200).send(user);
+});
 
-router.use(isAdmin)
+// Get all Users
+router.get('/', async (request, response) => {    
+    response.status(200).send(await User.find({}).sort("name").exec());
+});
 
-// Get user by id
-router.get('/:id', async (req, res) => {
-    if (!mongoose.isValidObjectId(req.params.id)) {
-        return res.status(400).send({error: InvalidId})
-    }
 
-    const user = await User.findById(req.params.id).exec()
-    if (!user)
-        return res.status(404).send({error: NotFound})
-    
-    res.status(200).send(user)
-})
+// Modify User by ID
+router.patch("/:id", async (request, response) => {
+    if (!mongoose.isValidObjectId(request.params.id)) return response.status(400).send({ error: INVALID_ID });
 
-// Read all users
-router.get('/', async (req, res) => {    
-    res.status(200).send(
-        await User.find({}).sort("name").exec()
-    )
-})
+    let user = await User.findByIdAndUpdate(request.params.id, { ...request.body }, { returnDocument: "after" }).exec();
+    if (!user) return response.status(404).send({ error: NOT_FOUND });
 
-// Modify specific user
-router.patch('/:id', async (req, res) => {
-    if (!mongoose.isValidObjectId(req.params.id)) {
-        return res.status(400).send({error: InvalidId})
-    }
+    response.status(200).send(user);
+});
 
-    let user = await User.findByIdAndUpdate(req.params.id, {...req.body}, {returnDocument: 'after'}).exec()
 
-    if (!user)
-        return res.status(404).send({error: NotFound})
+// Delete User by ID
+router.delete("/:id", async (request, response) => {
+    if (!mongoose.isValidObjectId(request.params.id)) return response.status(400).send({ error: INVALID_ID });
 
-    res.status(200).send(user)
-})
+    const user = await User.findByIdAndRemove(request.params.id).exec();
+    if (!user) return response.status(404).send({ error: NOT_FOUND });
 
-// Delete user by id
-router.delete('/:id', async (req, res) => {
-    if (!mongoose.isValidObjectId(req.params.id)) {
-        return res.status(400).send({error: InvalidId})
-    }
+    return response.status(200).send();
+});
 
-    const user = await User.findByIdAndRemove(req.params.id).exec()
 
-    if (!user)
-        return res.status(404).send({error: NotFound})
-
-    return res.status(200).send()
-})
-
-module.exports = router
+module.exports = router;

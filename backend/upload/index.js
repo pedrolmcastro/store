@@ -1,19 +1,19 @@
-const multer = require('multer');
+const multer = require("multer");
 
-// Storage Config
+
+// Storage Configuration
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'images/')
+    destination: function(request, file, callback) {
+        callback(null, "images/");
     },
-    filename: function (req, file, cb) {
+    filename: function(request, file, callback) {
         const extension = file.originalname.split('.')[1];
-        const filename = `${req.params.id}.${extension}`;
+        const filename = request.params.id + '.' + extension;
         
-        req.filename = filename
-        
-        cb(null, filename)
-    }
+        request.filename = filename;
+        callback(null, filename);
+    },
 });
 
 
-module.exports = multer({ storage })
+module.exports = multer({ storage });

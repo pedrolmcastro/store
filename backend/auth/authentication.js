@@ -1,66 +1,68 @@
-const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy
-const JwtStrategy = require('passport-jwt').Strategy
-const ExtractJwt = require('passport-jwt').ExtractJwt
+const passport = require("passport");
+const JwtStrategy = require("passport-jwt").Strategy;
+const ExtractJwt = require("passport-jwt").ExtractJwt;
+const LocalStrategy = require("passport-local").Strategy;
 
-const ObjectId = require('mongoose').ObjectId
+const ObjectId = require('mongoose').ObjectId;
+const User = require("../models/user");
 
-const User = require('../models/user')
 
-const secretKey = '123' // Simple key for testing purposes
+const secretkey = "123"; // Simple key for Testing
 
-// Local Strategy through POST request
-passport.use(new LocalStrategy({
-        usernameField: 'email',
-        passwordField: 'password'
+
+// Local Strategy through POST Request
+
+passport.use(new LocalStrategy(
+    {
+        usernameField: "email",
+        passwordField: "password",
     },
-    async function (email, password, done) { 
-        // Check for user
+    async function(email, password, done) {
         try {
-            const user = await User.findOne({ email }).exec()
-            if (!user)
-                return done(null, false, { message: "User doesn't exist" })
+            const user = await User.findOne({ email }).exec();
+            if (!user) return done(null, false, { message: "User does not exist" });
             
-            // Check if password matches
-            const match = await user.compare(password, user.password)
-            if (!match) 
-                return done(null, false, { message: 'Incorrect Password' })
+            const match = await user.compare(password, user.password);
+            if (!match) return done(null, false, { message: "Incorrect Password" });
             
-            return done(null, user)
-        } catch (err) {
-            return done(err)
+            return done(null, user);
+        }
+        catch (error) {
+            return done(error);
         }
     }
-))
+));
 
-// Woulb be used for session management
+
+// Used for Session Management
+
 passport.serializeUser((user, done) => { 
-    done(null, user.id)
-})
+    done(null, user.id);
+});
+
 passport.deserializeUser(async (id, done) => { 
-    await User.findById(ObjectId(id), (err, user) => { 
-        done(err, user)
-    })
-})
+    await User.findById(ObjectId(id), (error, user) => done(error, user));
+});
 
-// JWT Strategy: Client sends Bearer token header
-const opts = { 
+
+// JWT Strategy: Client sends Bearer Token Header
+
+const options = { 
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: secretKey
-}
+    secretOrKey: secretkey,
+};
 
-// Check if JWT is valid (unadultered, not expired)
-passport.use(new JwtStrategy(opts, async (payload, done) => { 
+passport.use(new JwtStrategy(options, async (payload, done) => { 
     try {
-        const user = await User.findById(payload.id)    
-        if (!user)
-            return done(null, false)
+        const user = await User.findById(payload.id);
+        if (!user) return done(null, false);
 
-        return done(null, { id: user.id, isAdmin: user.admin })
-    } catch (err) {
-        return done(err, false)
+        return done(null, { id: user.id, isadmin: user.admin });
     }
+    catch (error) {
+        return done(error, false);
+    }
+}));
 
-}))
 
-module.exports = { passport, secretKey }
+module.exports = { passport, secretkey };

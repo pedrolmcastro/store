@@ -65,7 +65,7 @@
                 admin:    false,
             })).data
 
-            if (!data.user)
+            if (!data)
                 return this.error = "Sorry, we weren't able to register your user.";
         
             login.email = this.email

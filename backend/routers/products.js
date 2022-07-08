@@ -1,96 +1,89 @@
-const Product = require('../models/product')
-const express = require('express')
-const { default: mongoose } = require('mongoose')
-const upload = require('../upload')
+const express = require("express");
+const upload = require("../upload");
+const Product = require("../models/product");
+const { default: mongoose } = require("mongoose");
+const { isauthenticated, isadmin } = require("../auth/authorization");
 
-const { isAuthenticated, isAdmin } = require('../auth/authorization')
+const router = express.Router();
 
-const NotFound = "Product not found."
-const InvalidId = "Invalid ID Supplied."
-const MaxResults = 10000
-const DefaultSort = "name"
 
-const router = express.Router()
+const NOT_FOUND = "Product not found.";
+const INVALID_ID = "Invalid ID Supplied.";
 
-// Read all products with filters
-router.get('/', async (req, res) => {    
-    res.status(200).send(
+
+// Get all Products with Filters
+router.get('/', async (request, response) => {    
+    response.status(200).send(
         await Product
             .find({
-                ...req.query,
-                quantity: { $gt: req.query.instock === "true" ? 0 : -1 },
-                name: { $regex: req.query.search || "", $options: "i" } 
-            }).limit(req.query.max || MaxResults)
-            .sort(req.query.sort || DefaultSort)
+                ...request.query,
+                quantity: { $gt: request.query.instock === "true" ? 0 : -1 },
+                name: { $regex: request.query.search || "", $options: 'i' },
+            })
+            .limit(request.query.max || 10000)
+            .sort(request.query.sort || "name")
             .exec()
-    )
-})
+    );
+});
 
-// Get product by id
-router.get('/:id', async (req, res) => {
-    if (!mongoose.isValidObjectId(req.params.id)) {
-        return res.status(400).send({error: InvalidId})
-    }
+// Get Product by ID
+router.get("/:id", async (request, response) => {
+    if (!mongoose.isValidObjectId(request.params.id)) return response.status(400).send({ error: INVALID_ID });
 
-    const product = await Product.findById(req.params.id).exec()
-    if (!product)
-        return res.status(404).send({error: NotFound})
+    const product = await Product.findById(request.params.id).exec();
+    if (!product) return response.status(404).send({ error: NOT_FOUND });
     
-    res.status(200).send(product)
-})
+    response.status(200).send(product);
+});
 
-router.use(isAuthenticated, isAdmin)
 
-// Create new product
-router.post('/', async (req, res) => {
-    const product = new Product({
-        ...req.body
-    })
+router.use(isauthenticated, isadmin);
 
-    await product.save()
 
-    res.status(200).send(product)    
-})
+// Create Product
+router.post('/', async (request, response) => {
+    try {
+        const product = new Product({ ...request.body });
+        await product.save();
 
-// Set image for a product
-router.post('/:id/image', upload.single('image'), async (req, res) => {
-    if (!mongoose.isValidObjectId(req.params.id)) {
-        return res.status(400).send({error: InvalidId})
+        response.status(200).send(product);   
     }
-
-    const product = await Product.findByIdAndUpdate(req.params.id, { image: req.filename }).exec()
-    if (!product)
-        return res.status(404).send({error: NotFound})
-
-    res.status(200).send({ "link": req.filename})    
-})
-
-// Modify specific product
-router.patch('/:id', async (req, res) => {
-    if (!mongoose.isValidObjectId(req.params.id)) {
-        return res.status(400).send({error: InvalidId})
+    catch(error) {
+        return response.status(400).send({ error: "Error during product registration." });
     }
+});
 
-    let product = await Product.findByIdAndUpdate(req.params.id, {...req.body}, {returnDocument: 'after'}).exec()
+// Set Product Image
+router.post("/:id/image", upload.single("image"), async (request, response) => {
+    if (!mongoose.isValidObjectId(request.params.id)) return response.status(400).send({ error: INVALID_ID });
 
-    if (!product)
-        return res.status(404).send({error: NotFound})
+    const product = await Product.findByIdAndUpdate(request.params.id, { image: request.filename }).exec();
+    if (!product) return response.status(404).send({ error: NOT_FOUND });
 
-    res.status(200).send(product)
-})
+    response.status(200).send({ "link": request.filename });    
+});
 
-// Delete product
-router.delete('/:id', async (req, res) => {
-    if (!mongoose.isValidObjectId(req.params.id)) {
-        return res.status(400).send({error: InvalidId})
-    }
 
-    const product = await Product.findByIdAndRemove(req.params.id).exec()
+// Modify Product by ID
+router.patch("/:id", async (request, response) => {
+    if (!mongoose.isValidObjectId(request.params.id)) return response.status(400).send({ error: INVALID_ID });
 
-    if (!product)
-        return res.status(404).send({error: NotFound})
+    let product = await Product.findByIdAndUpdate(request.params.id, { ...request.body }, { returnDocument: "after" }).exec();
+    if (!product) return response.status(404).send({ error: NOT_FOUND });
 
-    return res.status(200).send()
-})
+    response.status(200).send(product);
+});
 
-module.exports = router
+
+// Delete Product by ID
+router.delete("/:id", async (request, response) => {
+    if (!mongoose.isValidObjectId(request.params.id)) return response.status(400).send({ error: INVALID_ID });
+
+    const product = await Product.findByIdAndRemove(request.params.id).exec();
+    if (!product) return response.status(404).send({ error: NOT_FOUND });
+
+    return response.status(200).send();
+});
+
+
+module.exports = router;

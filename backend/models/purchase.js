@@ -1,22 +1,25 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
-const productPurchaseSchema = new mongoose.Schema({
+
+const productschema = new mongoose.Schema({
     quantity: {
         type: Number,
-        required: true
+        required: true,
     },
     paid: {
         type: Number,
-        required: true
+        required: true,
     },
     name: {
         type: String,
-        required: true
+        required: true,
     },
-    image: String,
-})
+    image: {
+        type: String,
+    },
+});
 
-const purchaseSchema = new mongoose.Schema({ 
+const purchaseschema = new mongoose.Schema({
     user: {
         type: mongoose.Types.ObjectId,
         required: true,
@@ -30,11 +33,11 @@ const purchaseSchema = new mongoose.Schema({
         required: true,
     },
     products: {
-        type: [ productPurchaseSchema ],
-        required: true
-    }
-})
+        type: [ productschema ],
+        required: true,
+    },
+});
 
-const Purchase = mongoose.model('Purchase', purchaseSchema)
 
-module.exports = Purchase
+const Purchase = mongoose.model("Purchase", purchaseschema);
+module.exports = Purchase;
