@@ -1,22 +1,23 @@
 <script setup>
-    import { reactive, ref, onBeforeMount } from "vue";
+    import { ref, onBeforeMount } from "vue";
+    import axios from "axios";
 
     import Toggle from "@vueform/toggle";
     import "@vueform/toggle/themes/default.css";
 
     import Store from "@/Store.vue";
-    import axios from "axios";
 
 
     const content = ref({
         users: [],
-        products: []
-    })
+        products: [],
+    });
 
     onBeforeMount(async () => {
-        content.value.products = (await axios.get("/products")).data
-        content.value.users = (await axios.get("/users")).data
-    })
+        content.value.products = (await axios.get("/products")).data;
+        content.value.users = (await axios.get("/users")).data;
+    });
+
 
     let show = ref("products");
 
@@ -24,25 +25,24 @@
     const products = {
         async delete(deleted) {
             if (confirm(`Product "${deleted.name}" will be deleted.`)) {
-                await axios.delete(`/products/${deleted.id}`)
-                content.value.products = (await axios.get("/products")).data
+                await axios.delete("/products/" + deleted.id);
+                content.value.products = (await axios.get("/products")).data;
             }
         },
-    }
+    };
 
     const users = {
         async delete(deleted) {
             if (confirm(`User "${deleted.name}" will be deleted.`)) {
-                await axios.delete(`/users/${deleted.id}`)
-                content.value.users = (await axios.get("/users")).data
+                await axios.delete("/users/" + deleted.id);
+                content.value.users = (await axios.get("/users")).data;
             }
         },
-        async toggleAdmin(toggled) {
-            await axios.patch(`/users/${toggled.id}`, { admin: toggled.admin })
-        }
-    }
 
-
+        async toggle(toggled) {
+            await axios.patch("/users/" + toggled.id, { admin: toggled.admin });
+        },
+    };
 </script>
 
 
@@ -56,7 +56,7 @@
 
             <div class="center" v-if="show === 'products'">
                 <div class="listing" v-for="product in content.products" :key="product.id">
-                    <img :src="product.image ? `http://localhost:3001/images/${product.image}` : require('@/assets/products/default.webp')">
+                    <img :src="product.image ? `http://localhost:3001/images/${product.image}` : require('@/assets/undefined.webp')">
 
                     <div class="information">
                         <strong> {{ product.name }} </strong>
@@ -81,7 +81,7 @@
 
                     <div>
                         <button class="edit" @click="users.delete(user)"> <font-awesome-icon icon="trash" /> </button>
-                        <Toggle v-model="user.admin" @change="users.toggleAdmin(user)"> Admin </Toggle>
+                        <Toggle v-model="user.admin" @change="users.toggle(user)"> Admin </Toggle>
                         <span :style="`color: ${user.admin ? 'var(--red)' : 'var(--grey)'};`"> Admin </span>
                     </div>
                 </div>

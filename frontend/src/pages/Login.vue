@@ -1,9 +1,9 @@
 <script setup>
+    import axios from "axios";
     import { ref, reactive } from "vue";
     import { useRouter } from "vue-router";
 
     import Store from "@/Store.vue";
-    import axios from "axios";
 
     const router = useRouter();
 
@@ -11,7 +11,7 @@
     const regex = {
         phone: /^\(\d{2}\) \d{5}-\d{4}$/,
         email: /^.+@.+\..+$/,
-    }
+    };
 
     let show = ref("login");
 
@@ -27,12 +27,15 @@
         if (this.password === "")          return this.error = "Please, inform a password.";
         if (!regex.email.test(this.email)) return this.error = 'Sorry, invalid email format, expected something like "user@email.com".';
 
-        const data = (await axios.post("/auth/login", { email: this.email, password: this.password })).data
+        try {
+            const data = (await axios.post("/auth/login", { email: this.email, password: this.password })).data;
 
-        if (data.token === undefined)              return this.error = "Sorry, the user informed was not found.";
-
-        Store.login(data.token);
-        router.push('/');
+            Store.login(data.token);
+            router.push('/');
+        }
+        catch (error) {
+            return this.error = "Sorry, invalid user or password.";
+        }
     };
 
 
@@ -47,37 +50,33 @@
     });
 
     register.validate = async function() {
-        if (this.name === "")                                                 return this.error = "Please, inform a name.";
-        if (this.email === "")                                                return this.error = "Please, inform an email.";
-        if (this.password === "")                                             return this.error = "Please, inform a password.";
-        if (this.confirm === "")                                              return this.error = "Please, confirm your password.";
-        if (this.phone !== "" && !regex.phone.test(this.phone))               return this.error = 'Sorry, invalid phone format, expected something like "(12) 12345-1234".';
-        if (!regex.email.test(this.email))                                    return this.error = 'Sorry, invalid email format, expected something like "user@email.com".';
-        if (this.password !== this.confirm)                                   return this.error = "Sorry, the password informed and its confirmation do not match.";
+        if (this.name === "")                                   return this.error = "Please, inform a name.";
+        if (this.email === "")                                  return this.error = "Please, inform an email.";
+        if (this.password === "")                               return this.error = "Please, inform a password.";
+        if (this.confirm === "")                                return this.error = "Please, confirm your password.";
+        if (this.phone !== "" && !regex.phone.test(this.phone)) return this.error = 'Sorry, invalid phone format, expected something like "(12) 12345-1234".';
+        if (!regex.email.test(this.email))                      return this.error = 'Sorry, invalid email format, expected something like "user@email.com".';
+        if (this.password !== this.confirm)                     return this.error = "Sorry, the password informed and its confirmation do not match.";
 
         try {
-            const data = (await axios.post('/auth/register', {
+            const data = (await axios.post("/auth/register", {
                 name:     this.name,
                 address:  this.address,
                 phone:    this.phone,
                 email:    this.email,
                 password: this.password,
                 admin:    false,
-            })).data
+            })).data;
 
-            if (!data.user)
-                return this.error = "Sorry, we weren't able to register your user.";
-        
-            login.email = this.email
-            login.password = this.password
-            login.validate()
-        } catch (err) {
-            console.log(err)
-            return this.error = "Sorry, there was an internal error while registering your user."
+            if (!data) return this.error = "Sorry, we weren't able to register your user.";
+
+            login.email = this.email;
+            login.password = this.password;
+            login.validate();
         }
-
-
-
+        catch (error) {
+            return this.error = "Sorry, there was an internal error while registering your user.";
+        }
     };
 </script>
 

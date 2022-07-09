@@ -1,7 +1,7 @@
 <template>
     <footer>
         <strong> Website built for a SCC0219 - Introdução ao Desenvolvimento Web 2022 assignment. </strong>
-        <p> Lucas M. F. Dagnone - 11295810 | Pedro L. M. Castro - 11795784 | João G. J. Marinho - 10698193 </p>
+        <p> Pedro L. M. Castro - 11795784 | João G. J. Marinho - 10698193 </p>
     </footer>
 </template>
 

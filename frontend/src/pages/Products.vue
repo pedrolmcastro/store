@@ -1,31 +1,27 @@
 <script setup>
-    import { ref, watchEffect } from "vue";
+    import axios from "axios";
     import { useRoute } from "vue-router";
+    import { ref, watchEffect } from "vue";
+
     import Card from "@/components/Card.vue";
-import axios from "axios";
 
     const route = useRoute();
+
+
     let order = ref("order by: a-z");
     const products =  ref([]);
 
     watchEffect(async () => {
         let params = {
-            search: route.query.search || "",
             instock: true,
-            sort: order.value === "order by: a-z" ? "name" : "price"
-        }
+            search: route.query.search || "",
+            sort: order.value === "order by: a-z" ? "name" : "price",
+        };
 
-        if (route.query.category)
-            params.category = route.query.category
+        if (route.query.category) params.category = route.query.category;
 
-        console.log(params)
-        let res = (await axios.get("/products", { params })).data
-        console.log(res)
-        products.value = res
-    })
-
-
-
+        products.value = (await axios.get("/products", { params })).data;
+    });
 </script>
 
 

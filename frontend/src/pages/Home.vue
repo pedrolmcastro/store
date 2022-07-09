@@ -1,20 +1,16 @@
 <script setup>
+    import axios from "axios";
     import { ref, onBeforeMount } from "vue";
 
     import Card from "@/components/Card.vue";
     import Search from "@/components/Search.vue";
-    import axios from "axios";
 
 
-    const products = ref([])
+    const products = ref([]);
+
     onBeforeMount(async () => {
-        products.value = (await axios.get("/products", { 
-            params: {
-                max: 4,
-                instock: true
-            }
-        })).data
-    })
+        products.value = (await axios.get("/products", { params: { max: 4, instock: true }})).data;
+    });
 </script>
 
 

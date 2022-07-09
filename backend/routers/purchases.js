@@ -1,69 +1,56 @@
-const Purchase = require('../models/purchase')
-const express = require('express')
-const { default: mongoose } = require('mongoose')
+const express = require("express");
+const Product = require("../models/product");
+const Purchase = require("../models/purchase");
+const { default: mongoose } = require("mongoose");
+const { isauthenticated } = require("../auth/authorization");
 
-const { isAuthenticated, isAdmin } = require('../auth/authorization')
-const Product = require('../models/product')
 
-const NotFound = "Purchase not found."
-const InvalidId = "Invalid ID Supplied."
+const router = express.Router();
+router.use(isauthenticated);
 
-const router = express.Router()
 
-router.use(isAuthenticated)
+const NOT_FOUND = "Purchase not found.";
+const INVALID_ID = "Invalid ID Supplied.";
 
-// Read all Purchases, using user_id as filter
-router.get('/', async (req, res) => {
-    const filters = {}
-    if (!req.user.isAdmin) {
-        filters.user = req.user.id
-    }
 
-    res.status(200).send(
-        await Purchase
-            .find(filters)
-            .sort("date")
-            .exec()
-    )
-})
+// Read all Purchases with User ID as Filter
+router.get('/', async (request, response) => {
+    response.status(200).send(await Purchase.find({ user: request.user.id }).sort("date").exec());
+});
 
-// Get purchase by id
-router.get('/:id', async (req, res) => {
-    if (!mongoose.isValidObjectId(req.params.id)) {
-        return res.status(400).send({error: InvalidId})
-    }
+// Get Purchase by ID
+router.get("/:id", async (request, response) => {
+    if (!mongoose.isValidObjectId(request.params.id)) return response.status(400).send({ error: INVALID_ID });
 
-    const purchase = await Purchase.findOne({
-        _id: req.params.id,
-        user: req.user.id
-    }).exec()
-    if (!purchase)
-        return res.status(404).send({error: NotFound})
+    const purchase = await Purchase.findOne({ _id: request.params.id, user: request.user.id }).exec();
+    if (!purchase) return response.status(404).send({ error: NOT_FOUND });
     
-    res.status(200).send(purchase)
-})
+    response.status(200).send(purchase);
+});
 
-// Create new purchase
-router.post('/', async (req, res) => {
+
+// Create Purchase
+router.post('/', async (request, response) => {
     try {
         const purchase = new Purchase({
-            user: req.user.id,
-            total: req.body.total,
-            date: req.body.date,
-            products: req.body.products
-        })
-    
-        await purchase.save()
+            user: request.user.id,
+            total: request.body.total,
+            date: request.body.date,
+            products: request.body.products,
+        });
+        
+        await purchase.save();
 
-        // Removing bought quantities from product        
-        await Promise.all(req.body.products.map(prod => Product.findByIdAndUpdate(prod.id, {
-            $inc: { quantity: -prod.quantity}
-        }) ))
+        await Promise.all(request.body.products.map(product => Product.findByIdAndUpdate(product.id, {
+            $inc: { quantity: - product.quantity }, // Remove Bought Quantities from Product
+        })));
 
-        res.status(200).send(purchase)
-    } catch (err) {
-        res.status(400).send({ msg: "Error while processing purchase" })
+        response.status(200).send(purchase);
     }
-})
+    catch (err) {
+        return response.status(400).send({ error: "Error while processing purchase." });
+    }
+});
 
-module.exports = router
+
+module.exports = router;

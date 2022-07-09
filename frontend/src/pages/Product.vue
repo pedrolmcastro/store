@@ -1,27 +1,24 @@
 <script setup>
+    import axios from "axios";
     import { useRoute } from "vue-router";
+    import { onBeforeMount, ref } from "vue";
 
     import Store from "@/Store.vue";
-import { onBeforeMount, ref } from "vue";
-import axios from "axios";
 
 
     const id = useRoute().params.id;
+    const product = ref({ image: undefined });
 
-    const product = ref({
-        image: 'default.webp'
-    })
-    
     onBeforeMount(async () => {
-        product.value = (await axios.get(`/products/${id}`)).data
-    })
+        product.value = (await axios.get("/products/" + id)).data;
+    });
 </script>
 
 
 <template>
     <main class="window">
         <section id="product" class="large shadow">
-            <div id="image"> <img :src="product.image ? `http://localhost:3001/images/${product.image}` : require('@/assets/products/default.webp')"> </div>
+            <div id="image"> <img :src="product.image ? `http://localhost:3001/images/${product.image}` : require('@/assets/undefined.webp')"> </div>
 
             <div id="text">
                 <div>

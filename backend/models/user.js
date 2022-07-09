@@ -1,23 +1,24 @@
-const mongoose = require('mongoose')
-const bcrypt = require('bcrypt')
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
-const userSchema = new mongoose.Schema({ 
+
+const schema = new mongoose.Schema({
     admin: {
         type: Boolean,
-        required: true
+        required: true,
     },
     name: {
         type: String,
-        required: true
+        required: true,
     },
     password: {
         type: String,
-        required: true
+        required: true,
     },
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
     },
     phone: {
         type: String,
@@ -25,12 +26,12 @@ const userSchema = new mongoose.Schema({
     address: {
         type: String,
     },
-})
+});
 
-userSchema.method('compare', async (formPass, userPass) => { 
-    return bcrypt.compare(formPass, userPass)
-})
+schema.method("compare", async (formpassword, userpassword) => { 
+    return bcrypt.compare(formpassword, userpassword);
+});
 
-const User = mongoose.model('User', userSchema)
 
-module.exports = User
+const User = mongoose.model("User", schema);
+module.exports = User;
