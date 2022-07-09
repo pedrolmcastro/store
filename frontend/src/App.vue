@@ -1,16 +1,15 @@
 <script setup>
+    import { onMounted } from "vue";
+
+    import Store from "./Store.vue";
     import Navbar from "@/components/Navbar.vue";
     import Footer from "@/components/Footer.vue";
-    import { onMounted } from "vue";
-    import Store from "./Store.vue"
+
 
     onMounted(() => {
         const token = localStorage.getItem("token");
-
-        if (token) {
-            Store.login(token);
-        }
-    })
+        if (token) Store.login(token);
+    });
 </script>
 
 

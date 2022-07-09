@@ -10,7 +10,7 @@
 <template>
     <div id="card" class="shadow">
         <router-link id="image" :to="`/products/${props.product.id}`">
-            <img :src="props.product.image ? `http://localhost:3001/images/${props.product.image}` : require('@/assets/products/default.webp')">
+            <img :src="props.product.image ? `http://localhost:3001/images/${props.product.image}` : require('@/assets/undefined.webp')">
         </router-link>
 
         <div id="information">

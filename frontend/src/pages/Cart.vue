@@ -1,9 +1,9 @@
 <script setup>
+    import axios from "axios";
     import { useRouter } from "vue-router";
     import { computed, reactive, ref } from "vue";
 
     import Store from "@/Store.vue";
-    import axios from "axios";
 
     const router = useRouter();
 
@@ -12,7 +12,7 @@
         cvv: /\d{3}/,
         expiration: /\d{2}\/\d{2}/,
         number: /\d{4} \d{4} \d{4} \d{4}/,
-    }
+    };
 
     let step = ref(0);
     let enable = computed(() => Store.logged() && !Store.empty());
@@ -47,7 +47,7 @@
         if (new Date(year, month) < new Date())      return this.error = "Sorry, expired credit card.";
 
         step.value = 2;
-    }
+    };
 
 
     async function confirm() {
@@ -57,7 +57,7 @@
             date: new Date().toISOString().slice(0, 10), // Current Date in YYYY-MM-DD
 
             products: Store.cart.map(item => ({
-                id: item.product.id, 
+                id: item.product.id,
                 quantity: item.quantity,
                 paid: item.product.price * item.quantity,
                 image: item.product.image,
@@ -65,8 +65,8 @@
             })),
         };
 
-        await axios.post('/purchases', purchase)
-        
+        await axios.post("/purchases", purchase);
+
         Store.clear();
         router.push('/');
     }
@@ -94,7 +94,7 @@
 
             <div class="center" v-if="step === 0">
                 <div class="listing" v-for="item in Store.cart" :key="item.product.id">
-                    <img :src="item.product.image ? `http://localhost:3001/images/${item.product.image}` : require('@/assets/products/default.webp')">
+                    <img :src="item.product.image ? `http://localhost:3001/images/${item.product.image}` : require('@/assets/undefined.webp')">
 
                     <div class="information">
                         <span> {{ item.product.name }} </span>

@@ -11,6 +11,7 @@ library.add(faBars, faMagnifyingGlass, faCartShopping, faCircleUser, faGears, fa
 
 
 // Libraries
+import axios from "axios";
 import Maska from "maska";
 import VueCollapsiblePanel from "@dafcoe/vue-collapsible-panel";
 
@@ -24,7 +25,6 @@ import Admin from "@/pages/Admin.vue";
 import Product from "@/pages/Product.vue";
 import Profile from "@/pages/Profile.vue";
 import Products from "@/pages/Products.vue";
-import axios from "axios";
 
 
 // Router Setup
@@ -44,9 +44,10 @@ const router = createRouter({
     routes,
 });
 
-// Axios setup
 
-axios.defaults.baseURL = 'http://localhost:3001'
+// Axios Setup
+axios.defaults.baseURL = "http://localhost:3001";
+
 
 createApp(App)
     .use(router)

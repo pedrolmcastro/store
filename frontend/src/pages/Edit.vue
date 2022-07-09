@@ -1,49 +1,46 @@
 <script setup>
+    import axios from "axios";
     import { ref, onBeforeMount } from "vue";
     import { useRoute, useRouter } from "vue-router";
-    import axios from "axios"
+
+    const router = useRouter();
+
 
     let id = useRoute().params.id;
+    const imagefile = ref();
+
+
     const product = ref({
         name: "",
         price: 0,
+        image: "",
         quantity: 0,
         summary: "",
         category: "",
         description: "",
-        image: "",
-    })
-
-    const imagefile = ref()
+    });
 
     onBeforeMount(async () => {
-        if (id !== "new")
-            product.value = {
-                ...(await axios.get(`/products/${id}`)).data
-            }
-    })
+        if (id !== "new") product.value = (await axios.get("/products/" + id)).data;
+    });
 
-    const router = useRouter()
-    const submitChanges = async () => {
+
+    async function save() {
         if (id === "new") {
-            id = (await axios.post("/products", {
-                ...product.value
-            })).data.id
+            id = (await axios.post("/products", product.value)).data.id;
         }
         else {
-            await axios.patch(`/products/${id}`, {
-                ...product.value
-            })
+            await axios.patch("/products/" + id, product.value);
         }
-        
-        if (imagefile.value.files.length === 1) {
-            let form = new FormData()
-            form.append("image", imagefile.value.files[0])
 
-            await axios.post(`/products/${id}/image`, form)
+        if (imagefile.value.files.length === 1) {
+            let form = new FormData();
+            form.append("image", imagefile.value.files[0]);
+
+            await axios.post(`/products/${id}/image`, form);
         }
-        
-        router.push('/admin')
+
+        router.push("/admin");
     }
 </script>
 
@@ -52,11 +49,12 @@
     <main class="window">
         <section class="large shadow">
             <div id="image"> 
-                <label for="image-input">
-                    <img :src="product.image ? `http://localhost:3001/images/${product.image}` : require('@/assets/products/default.webp')"> 
+                <label for="imagefile">
+                    <img :src="product.image ? `http://localhost:3001/images/${product.image}` : require('@/assets/undefined.webp')"> 
                 </label>
 
-                <input ref="imagefile" id="image-input" type="file" accept="image/png, image/jpeg" hidden/>
+                <input ref="imagefile" id="imagefile" type="file" accept="image/png, image/jpeg" hidden />
+                <p> {{ test }} </p>
             </div>
 
             <form class="inputs">
@@ -99,7 +97,8 @@
                         </select>
                     </div>
                 </div>
-                <button class="action" @click.prevent="submitChanges">CONFIRM</button>
+
+                <div id="button"> <button class="action big" @click.prevent="save()"> Save </button> </div>
             </form>
         </section>
     </main>
@@ -132,7 +131,23 @@
         width: 100%;
         height: 100%;
         object-fit: contain;
+    }
+
+    #image img:hover {
         cursor: pointer;
+        filter: brightness(70%);
+    }
+
+
+    /* Button */
+
+    #button {
+        display: flex;
+        justify-content: center;
+    }
+
+    #button button {
+        margin: 5% 0;
     }
 
 
@@ -165,14 +180,9 @@
     }
 
     #bottom {
-        padding-left: 5px;
         display: flex;
+        padding-left: 5px;
         justify-content: space-between;
-    }
-
-    button {
-        margin-top: 2rem;
-        padding: 1rem 3rem;
     }
 
 
@@ -191,8 +201,6 @@
             width: 100%;
             padding: 2rem 0;
         }
-
-
     }
 
     @media (min-width: 769px) and (max-width: 1024px) {

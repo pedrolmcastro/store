@@ -59,10 +59,10 @@
     /* Left */
 
     #left {
-        width: 33%;
         height: 100%;
         display: flex;
         align-items: center;
+        width: calc(100% / 3);
     }
 
     #search {
@@ -91,8 +91,8 @@
     /* Right */
 
     #right {
-        width: 33%;
         text-align: end;
+        width: calc(100% / 3);
     }
 
     .button {
