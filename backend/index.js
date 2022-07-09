@@ -53,4 +53,11 @@ app.use("/images", express.static(__dirname + "/images"));
 
 // Start App
 const port = 3001;
-app.listen(port, () => console.log(`Listening on localhost:${port}`));
+const server = app.listen(port, () => console.log(`Listening on localhost:${port}`));
+
+
+// At Exit
+process.on("SIGINT", () => {
+    server.close();
+    mongoose.connection.close();
+});

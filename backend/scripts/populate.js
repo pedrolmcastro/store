@@ -59,7 +59,7 @@ const users = [
 		password: "$2b$10$e5ssQBmwH7HQ3iCqM.g5Q.9gbvMm45IaRYnc.yubKkNR0VJxrTVAC",
         email: "admin@admin.com",
         phone: "(13) 99444-1234",
-        address: "Rua dos Admins, 123",
+        address: "Admins Street, 1 - Admintland - AL",
     },
     {
         admin: false,
@@ -67,7 +67,7 @@ const users = [
 		password: "$2b$10$U90pHM3o.kN76hrigM2G5eOF65GybKjrXAIwBzvUyY2VJPzYdo26u",
         email: "client@client.com",
         phone: "(13) 99888-1234",
-        address: "Rua dos Clientes, 123",
+        address: "Clients Street, 1 - Clientland - CL",
     },
 ];
 
