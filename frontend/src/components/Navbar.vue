@@ -131,61 +131,61 @@
     /* Burger Menu */
 
     .bm-burger-button {
-        width: 20px;
-        height: 20px;
-        margin: 0 10px;
-        position: sticky;
-        color: var(--grey);
+        width: 20px !important;
+        height: 20px !important;
+        margin: 0 10px !important;
+        position: sticky !important;
+        color: var(--grey) !important;
     }
 
     .bm-cross-button {
-        margin: 12px;
+        margin: 12px !important;
     }
 
     .bm-burger-button:hover, .bm-cross-button:hover {
-        cursor: pointer;
-        filter: brightness(70%);
+        cursor: pointer !important;
+        filter: brightness(70%) !important;
     }
 
     .bm-burger-bars, .bm-cross {
-        background-color: var(--white);
+        background-color: var(--white) !important;
     }
 
 
     .bm-menu {
-        padding-top: 35px;
-        background-color: var(--black);
+        padding-top: 35px !important;
+        background-color: var(--black) !important;
     }
 
     .bm-overlay {
-        background: var(--background);
+        background: var(--background) !important;
     }
 
 
     .bm-item-list {
-        margin: 0;
-        padding: 0;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     .bm-item-list > h1 {
-        margin: 0;
-        font-weight: 700;
-        font-size: 1.2rem;
-        color: var(--white);
-        padding: 30px 0 10px 20px;
-        text-transform: uppercase;
+        margin: 0 !important;
+        font-weight: 700 !important;
+        font-size: 1.2rem !important;
+        color: var(--white) !important;
+        padding: 30px 0 10px 20px !important;
+        text-transform: uppercase !important;
     }
 
     .bm-item-list > .category {
-        margin: 0;
-        font-size: 1rem;
-        font-weight: 300;
-        padding: 5px 30px;
-        color: var(--white);
+        margin: 0 !important;
+        font-size: 1rem !important;
+        font-weight: 300 !important;
+        padding: 5px 30px !important;
+        color: var(--white) !important;
     }
 
     .bm-item-list > .category:hover {
-        cursor: pointer;
-        background-color: var(--red);
+        cursor: pointer !important;
+        background-color: var(--red) !important;
     }
 </style>

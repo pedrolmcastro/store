@@ -79,14 +79,36 @@ Since it requires user inputs through a graphic interface, no automated tests we
 
 
 ## 6. Build Procedures
+### Frontend
 
-To build the client side of this website, go to the frontend directory and compile the Vue project with the following commands:
+To run the client side of this website, we currently provide 2 options:
 
+- Development server:
 ```shell
-cd frontend/
+cd frontend
 npm install
 npm run serve
 ```
+- Distribution folder:
+
+Simply open the frontend/dist/index.html file.
+### Backend
+
+To run the backend of the application, you will need to have **docker** and **node** installed and then run the following commands:
+
+```
+docker run -d -p 27017:27017 --name vue-mongo \
+  -e MONGO_INITDB_ROOT_USERNAME=admin \
+  -e MONGO_INITDB_ROOT_PASSWORD=admin \
+  mongo
+
+cd backend
+npm install
+npm run populate
+npm start
+```
+
+PS: For simplicity sake we already set mongoose to run with these exact Mongo configurations. If you want to use a Mongo instance with different credentials you can alter the mongoose.connect(...) command found on backend/scripts/populate.js and backend/index.js
 
 Now you will be able to see the application running on your browser by accessing the [localhost:8080](http://localhost:8080/). To terminate the execution hit `Ctrl + C` in your terminal.
 
