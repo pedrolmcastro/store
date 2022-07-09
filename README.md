@@ -1,7 +1,6 @@
 # Gaming Gem
 
 - Pedro Lucas de Moliner de Castro - 11795784
-- Lucas Massao Fukusawa Dagnone - 11295810
 - João Guilherme Jarochinski Marinho - 10698193
 
 
@@ -120,4 +119,4 @@ During the frontend development, the group noticed that implementing a generic f
 
 ## 8. Comments
 
-TODO
+No comments.
