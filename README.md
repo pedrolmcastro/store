@@ -101,6 +101,9 @@ docker run -d -p 27017:27017 --name vue-mongo \
   -e MONGO_INITDB_ROOT_PASSWORD=admin \
   mongo
 
+# if you already created the instance previously, use instead:
+docker start vue-mongo
+
 cd backend
 npm install
 npm run populate
