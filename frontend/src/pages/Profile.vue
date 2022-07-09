@@ -29,7 +29,7 @@
     <main class="window">
         <section id="profile" class="small shadow">
             <h1> {{ Store.user?.name }} </h1>
-            <p>Id: {{ Store.id(Store.user) }} </p>
+            <span> {{ Store.id(Store.user) }} </span>
 
             <p>
                 {{ Store.user?.address }} <br>
@@ -93,6 +93,11 @@
 
     #profile h1 {
         font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    #profile span {
+        margin-bottom: 3rem;
     }
 
     #profile button {

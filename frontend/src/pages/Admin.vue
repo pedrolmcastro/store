@@ -82,7 +82,7 @@
                     <div>
                         <button class="edit" @click="users.delete(user)"> <font-awesome-icon icon="trash" /> </button>
                         <Toggle v-model="user.admin" @change="users.toggle(user)"> Admin </Toggle>
-                        <span :style="`color: ${user.admin ? 'var(--red)' : 'var(--grey)'};`"> Admin </span>
+                        <span id="admin" :style="`color: ${user.admin ? 'var(--red)' : 'var(--grey)'};`"> Admin </span>
                     </div>
                 </div>
             </div>
@@ -109,7 +109,7 @@
     /* Products */
 
     .listing {
-        width: 70%;
+        width: 90%;
         height: 40px;
     }
 
@@ -133,12 +133,12 @@
     /* Media Queries */
 
     @media (max-width: 728px) {
-        .listing {
-            width: 90%;
-        }
-        
         .edit {
             padding: 5px;
+        }
+
+        #admin {
+            display: none;
         }
     }
 </style>
